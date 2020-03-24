@@ -259,6 +259,9 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 
 	@Override
 	public void setFromFile(String fileName) throws IOException {
+		for (int i = 0; i < 10; i++) {
+			Board.add(new Point(0, 0));//on ajoute les positions de depart de tout les pions
+		}
 		//the file to be opened for reading  
 		String currL;
 
