@@ -372,7 +372,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 	    		}
 	    		//...Et fin du plateau.
 	    		myWriter.write("0"+(i-1)+" ");
-	    	 }
+	    	 } 
 	      }
 	    //On ferme le writer
 	    myWriter.close();
