@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro> {
 	ArrayList<Point> Board;
+	static ArrayList<Point> vitesse = new ArrayList<Point>();
 
 	/*
 	 * INTERFACE
@@ -15,6 +16,10 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		Board = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
 			Board.add(new Point(0, 0));
+			if(i == 0 || i == 4 || i == 6 || i == 8) vitesse.add(new Point(1, 3));
+			if(i == 1 || i == 3 || i == 5 || i == 9) vitesse.add(new Point(3, 1));
+			if(i == 2 || i == 7) vitesse.add(new Point(2, 2));
+			
 		}
 	}
 
@@ -95,84 +100,60 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		}
 		return adv;
 	}
-
+	
 	@Override
 	public BoardSquadro play(MoveSquadro move, RoleSquadro role) {
 		BoardSquadro BoardInt = this.copy();
 		int piece = move.getPiece();
+		int AR = Board.get(piece).y;
+		int speed;
+		if(AR == 0) {
+			speed = vitesse.get(piece).x;
+		} else {
+			speed = vitesse.get(piece).y;
+		}
+		
 		ArrayList<Integer> ListPieceAdv = new ArrayList<Integer>();
-		ListPieceAdv = getAdv(move, role);
-		int nbAdv = ListPieceAdv.size();
-		int pos;
+		int nbAdv;
+	
 		switch (role) {
 
 		case HORIZONTAL:
-			switch (piece) {
 			
-			case 0:
-			case 4:
-
-				if (BoardInt.Board.get(piece).y == 0) {
-
-					int x = BoardInt.Board.get(piece).x + 1;// la case ou on va atterir
-					if (x < 6) {// si ce n'est pas la derniere case
-
-						if (nbAdv != 0) {// si rencontre adversaire
-							pos = x + nbAdv;
-							if (pos >= 6)
-								pos = 6;
-							Point point = new Point(pos, 0);
-							BoardInt.Board.set(piece, point);
-
-							for (int pieceAdv : ListPieceAdv) {
-
-								if (BoardInt.Board.get(pieceAdv).y == 0) {// si la piece adv est sur l'aller
-									Point pointAdv = new Point(0, 0);// on la reinitialise
-									BoardInt.Board.set(pieceAdv, pointAdv);
-								} else {// si la piece adv est sur le retour
-									Point pointAdv = new Point(6, 1);// on la reinitialise
-									BoardInt.Board.set(pieceAdv, pointAdv);
-								}
-
-							}
-
-						} else {
-							Point point = new Point(x, 0);
-							BoardInt.Board.set(piece, point);
-						}
-
-					} else {
-						Point point = new Point(BoardInt.Board.get(piece).x + 1, 1);
-						BoardInt.Board.set(piece, point);
-					}
-
-				} else {// -3
-
-					if (BoardInt.Board.get(piece).x - 3 >= 0) {//si ce n'est pas la derniere case
-						if (nbAdv != 0) {// si rencontre adversaire
-							
-						}
-						
-						Point point = new Point(BoardInt.Board.get(piece).x - 3, 1);
-						BoardInt.Board.set(piece, point);
-					} else {
-						Point point = new Point(0, 1);
-						BoardInt.Board.set(piece, point);
-					}
-
-				}
-				break;
+			for(int i = 0; i < speed; i++) {
 				
-			case 1:
-			case 3:// 3
-				break;
-			case 2:// 2
-				break;
-			
+				int x = BoardInt.Board.get(piece).x;
+				ListPieceAdv = getAdv(move, role);
+				nbAdv = ListPieceAdv.size();
+				
+				if(ListPieceAdv.size() == 0) {
+					if(x+1 > 6) BoardInt.Board.set(piece, new Point(6, 1));
+					else BoardInt.Board.set(piece, new Point(x+1, 0));
+					
+				} else {
+					if(x+nbAdv > 6) BoardInt.Board.set(piece, new Point(6, 1));
+					else BoardInt.Board.set(piece, new Point(x+nbAdv, 0));
+					for(int adv : ListPieceAdv) {
+						if(BoardInt.Board.get(adv).y == 1 )BoardInt.Board.set(adv, new Point(6, 1));
+						else BoardInt.Board.set(adv, new Point(0, 0));
+					}
+					
+					break;
+				}
 			}
 			break;
 
 		case VERTICAL:
+			for(int i = 0; i < speed; i ++) {
+				
+				int x = BoardInt.Board.get(piece).x;
+				ListPieceAdv = getAdv(move, role);
+				nbAdv = ListPieceAdv.size();
+				if(ListPieceAdv.size() == 0) {
+					if(x+1 > 6) ;
+				}
+				
+			}
 			break;
 		}
 		return BoardInt;
