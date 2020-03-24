@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro> {
 	ArrayList<Point> Board;
+	static ArrayList<Point> vitesse = new ArrayList<Point>();
 
 	/*
 	 * INTERFACE
@@ -15,6 +16,10 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		Board = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
 			Board.add(new Point(0, 0));
+			if(i == 0 || i == 4 || i == 6 || i == 8) vitesse.add(new Point(1, 3));
+			if(i == 1 || i == 3 || i == 5 || i == 9) vitesse.add(new Point(3, 1));
+			if(i == 2 || i == 7) vitesse.add(new Point(2, 2));
+			
 		}
 	}
 
@@ -95,11 +100,63 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		}
 		return adv;
 	}
-
+	
 	@Override
 	public BoardSquadro play(MoveSquadro move, RoleSquadro role) {
 		BoardSquadro BoardInt = this.copy();
 		int piece = move.getPiece();
+
+		int AR = Board.get(piece).y;
+		int speed;
+		if(AR == 0) {
+			speed = vitesse.get(piece).x;
+		} else {
+			speed = vitesse.get(piece).y;
+		}
+		
+		ArrayList<Integer> ListPieceAdv = new ArrayList<Integer>();
+		int nbAdv;
+	
+		switch (role) {
+
+		case HORIZONTAL:
+			
+			for(int i = 0; i < speed; i++) {
+				
+				int x = BoardInt.Board.get(piece).x;
+				ListPieceAdv = getAdv(move, role);
+				nbAdv = ListPieceAdv.size();
+				
+				if(ListPieceAdv.size() == 0) {
+					if(x+1 > 6) BoardInt.Board.set(piece, new Point(6, 1));
+					else BoardInt.Board.set(piece, new Point(x+1, 0));
+					
+				} else {
+					if(x+nbAdv > 6) BoardInt.Board.set(piece, new Point(6, 1));
+					else BoardInt.Board.set(piece, new Point(x+nbAdv, 0));
+					for(int adv : ListPieceAdv) {
+						if(BoardInt.Board.get(adv).y == 1 )BoardInt.Board.set(adv, new Point(6, 1));
+						else BoardInt.Board.set(adv, new Point(0, 0));
+					}
+					
+					break;
+				}
+			}
+			break;
+
+		case VERTICAL:
+			for(int i = 0; i < speed; i ++) {
+				
+				int x = BoardInt.Board.get(piece).x;
+				ListPieceAdv = getAdv(move, role);
+				nbAdv = ListPieceAdv.size();
+				if(ListPieceAdv.size() == 0) {
+					if(x+1 > 6) ;
+				}
+				
+			}
+			break;
+		}
 
 		return BoardInt;
 	}
