@@ -259,7 +259,6 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 
 	@Override
 	public void setFromFile(String fileName) throws IOException {
-		ArrayList<Point>Init = new ArrayList<Point>();
 		//the file to be opened for reading  
 		String currL;
 
@@ -277,19 +276,21 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
         		joueur = RoleSquadro.HORIZONTAL;	
         	} 
         	
-        	if(currL.contains("^")) {
-        		currL.charAt(2)
-        	}
-        	if(currL.contains("^")) {
-        		
-        	}
-        	if(currL.contains("^")) {
-	
-        	}
-        	if(currL.contains("^")) {
-	
-        	}
-        	
+        	for(int i = 3; i < 10; i++) {
+        		int y = Integer.parseInt(String.valueOf(currL.charAt(2)));
+        		if (currL.charAt(i) == '<') {
+        			Board.add(y-2, new Point(i-3,1));
+        		}
+				if (currL.charAt(i) == '>') {
+					Board.add(y-2, new Point(i-3,0));
+				        		}
+				if (currL.charAt(i) == '^') {
+					Board.add(i+1, new Point(y-1,0));
+				}
+				if (currL.charAt(i) == 'v') {
+					Board.add(i+1, new Point(y-1,1));
+				}
+        	}	
         }
         br.close();
 		
