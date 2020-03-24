@@ -16,10 +16,13 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		Board = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
 			Board.add(new Point(0, 0));
-			if(i == 0 || i == 4 || i == 6 || i == 8) vitesse.add(new Point(1, 3));
-			if(i == 1 || i == 3 || i == 5 || i == 9) vitesse.add(new Point(3, 1));
-			if(i == 2 || i == 7) vitesse.add(new Point(2, 2));
-			
+			if (i == 0 || i == 4 || i == 6 || i == 8)
+				vitesse.add(new Point(1, 3));
+			if (i == 1 || i == 3 || i == 5 || i == 9)
+				vitesse.add(new Point(3, 1));
+			if (i == 2 || i == 7)
+				vitesse.add(new Point(2, 2));
+
 		}
 	}
 
@@ -34,18 +37,18 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		return new BoardSquadro(this.Board);
 	}
 
-	public ArrayList<Integer> getAdv(MoveSquadro move, RoleSquadro role) {// nb adv consecutifs
+	public ArrayList<Integer> getAdv(MoveSquadro move, RoleSquadro role, int coord) {// nb adv consecutifs
 		ArrayList<Integer> adv = new ArrayList<Integer>();
 		int piece = move.getPiece();
 		boolean consec = true;// si les pions sont consec
 		int xy = Board.get(piece).x + 1;
-		int AR = Board.get(piece).y;//Aller ou Retour
+		int AR = Board.get(piece).y;// Aller ou Retour
 
 		switch (role) {
-		
+
 		case HORIZONTAL:
-			switch(AR) {
-			
+			switch (AR) {
+
 			case 0:
 				for (int i = 4 + xy; i < 10; i++) {
 					if (Board.get(i).x == 5 - piece && consec) {
@@ -53,10 +56,10 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 					} else {
 						consec = false;
 					}
-	
+
 				}
 				break;
-				
+
 			case 1:
 				for (int i = 4 + xy; i > 0; i--) {
 					if (Board.get(i).x == 5 - piece && consec) {
@@ -64,17 +67,16 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 					} else {
 						consec = false;
 					}
-	
+
 				}
 				break;
-			
+
 			}
 			break;
-			
 
 		case VERTICAL:
-			switch(AR) {
-			
+			switch (AR) {
+
 			case 0:
 				for (int i = 0; i < 5 - xy; i++) {
 					if (Board.get(i).x == piece - 4 && consec) {
@@ -84,9 +86,9 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 					}
 				}
 				break;
-				
+
 			case 1:
-				for (int i = 5-xy; i > 0; i--) {
+				for (int i = 5 - xy; i > 0; i--) {
 					if (Board.get(i).x == piece - 4 && consec) {
 						adv.add(i);
 					} else {
@@ -95,64 +97,118 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				}
 				break;
 			}
-			
+
 			break;
 		}
 		return adv;
 	}
-	
+
 	@Override
 	public BoardSquadro play(MoveSquadro move, RoleSquadro role) {
 		BoardSquadro BoardInt = this.copy();
 		int piece = move.getPiece();
 		int AR = Board.get(piece).y;
 		int speed;
-		if(AR == 0) {
+		if (AR == 0) {
 			speed = vitesse.get(piece).x;
 		} else {
 			speed = vitesse.get(piece).y;
 		}
-		
+
 		ArrayList<Integer> ListPieceAdv = new ArrayList<Integer>();
 		int nbAdv;
-	
+
 		switch (role) {
 
 		case HORIZONTAL:
-			
-			for(int i = 0; i < speed; i++) {
-				
-				int x = BoardInt.Board.get(piece).x;
-				ListPieceAdv = getAdv(move, role);
-				nbAdv = ListPieceAdv.size();
-				
-				if(ListPieceAdv.size() == 0) {
-					if(x+1 > 6) BoardInt.Board.set(piece, new Point(6, 1));
-					else BoardInt.Board.set(piece, new Point(x+1, 0));
+			if (AR == 0) {
+				for (int i = 0; i < speed; i++) {
+
+					int x = BoardInt.Board.get(piece).x;
+					ListPieceAdv = getAdv(move, role, x+1);
+					nbAdv = ListPieceAdv.size();
+
+					if (ListPieceAdv.size() == 0) {
+						if (x + 1 > 6)
+							BoardInt.Board.set(piece, new Point(6, 1));
+						else
+							BoardInt.Board.set(piece, new Point(x + 1, 0));
+
+					} else {
+						if (x + nbAdv > 6)
+							BoardInt.Board.set(piece, new Point(6, 1));
+						else
+							BoardInt.Board.set(piece, new Point(x + nbAdv, 0));
+						for (int adv : ListPieceAdv) {
+							if (BoardInt.Board.get(adv).y == 1)
+								BoardInt.Board.set(adv, new Point(6, 1));
+							else
+								BoardInt.Board.set(adv, new Point(0, 0));
+						}
+
+						break;
+					}
+
+				}
+
+			} else {
+				for(int i = 0; i < speed; i++) {
 					
-				} else {
-					if(x+nbAdv > 6) BoardInt.Board.set(piece, new Point(6, 1));
-					else BoardInt.Board.set(piece, new Point(x+nbAdv, 0));
-					for(int adv : ListPieceAdv) {
-						if(BoardInt.Board.get(adv).y == 1 )BoardInt.Board.set(adv, new Point(6, 1));
-						else BoardInt.Board.set(adv, new Point(0, 0));
+					int x = BoardInt.Board.get(piece).x;
+					ListPieceAdv = getAdv(move, role, x+1);
+					nbAdv = ListPieceAdv.size();
+					if(ListPieceAdv.size() == 0) {
+						if(x-1 < 0)
+							BoardInt.Board.set(piece, new Point(0, 1));
+						else
+							BoardInt.Board.set(piece, new Point(x - 1, 1));
+					} else {
+						if(x - nbAdv < 0)
+							BoardInt.Board.set(piece, new Point(0, 1));
+						else
+							BoardInt.Board.set(piece, new Point(x - nbAdv, 1));
+						for (int adv : ListPieceAdv) {
+							if (BoardInt.Board.get(adv).y == 1)
+								BoardInt.Board.set(adv, new Point(6, 1));
+							else
+								BoardInt.Board.set(adv, new Point(0, 0));
+						}
+
+						break;
+						
 					}
 					
-					break;
 				}
+				
 			}
 			break;
 
 		case VERTICAL:
-			for(int i = 0; i < speed; i ++) {
-				
+			for (int i = 0; i < speed; i++) {
+
 				int x = BoardInt.Board.get(piece).x;
-				ListPieceAdv = getAdv(move, role);
+				ListPieceAdv = getAdv(move, role, x+1);
 				nbAdv = ListPieceAdv.size();
-				if(ListPieceAdv.size() == 0) {
-					if(x+1 > 6) ;
+				if (ListPieceAdv.size() == 0) {
+					if (x + 1 > 6)
+						BoardInt.Board.set(piece, new Point(6, 1));
+					else
+						BoardInt.Board.set(piece, new Point(x + 1, 0));
+
+				} else {
+					if (x + nbAdv > 6)
+						BoardInt.Board.set(piece, new Point(6, 1));
+					else
+						BoardInt.Board.set(piece, new Point(x + nbAdv, 0));
+					for (int adv : ListPieceAdv) {
+						if (BoardInt.Board.get(adv).y == 1)
+							BoardInt.Board.set(adv, new Point(6, 1));
+						else
+							BoardInt.Board.set(adv, new Point(0, 0));
+					}
+
 				}
-				
+
 			}
 			break;
 		}
