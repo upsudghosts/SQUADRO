@@ -107,6 +107,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 	public BoardSquadro play(MoveSquadro move, RoleSquadro role) {
 		BoardSquadro BoardInt = this.copy();
 		int piece = move.getPiece();
+
 		int AR = Board.get(piece).y;
 		int speed;
 		if (AR == 0) {
@@ -212,6 +213,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			}
 			break;
 		}
+
 		return BoardInt;
 	}
 
@@ -273,6 +275,6 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		}
 
 		return false;
-	}
+	}	 
 
 }
