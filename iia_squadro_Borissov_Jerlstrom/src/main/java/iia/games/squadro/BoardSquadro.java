@@ -149,6 +149,9 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				} else {// -3
 
 					if (BoardInt.Board.get(piece).x - 3 >= 0) {//si ce n'est pas la derniere case
+						if (nbAdv != 0) {// si rencontre adversaire
+							
+						}
 						
 						Point point = new Point(BoardInt.Board.get(piece).x - 3, 1);
 						BoardInt.Board.set(piece, point);
