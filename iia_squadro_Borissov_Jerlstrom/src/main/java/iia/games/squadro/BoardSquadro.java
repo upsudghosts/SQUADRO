@@ -5,7 +5,9 @@ import iia.games.base.IPartie2;
 
 import java.awt.Point;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -264,45 +266,117 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		}
 		//the file to be opened for reading  
 		String currL;
-
+		
+		//initialise le buffer pour lecture du fichier
         BufferedReader br = new BufferedReader(new FileReader(fileName));
-
+        
+        //tant qu'on lit des lignes
         while ((currL = br.readLine()) != null) {
         	if(currL.charAt(0) == '%') {
         		//On ne fait rien : ligne commentaire
         	}
         	
-        	if(currL.contains("horizontal")) {
-        		joueur = RoleSquadro.VERTICAL;
+        	//On vérifie si nos lignes contiennent les caractères voulus
+        	if(currL.contains("horizontal")) { //Dernier coup horizontal
+        		joueur = RoleSquadro.VERTICAL; //Celui qui joue est donc vertical
         	} 
-        	else if(currL.contains("vertical")) {
+        	else if(currL.contains("vertical")) { //L'inverse
         		joueur = RoleSquadro.HORIZONTAL;	
         	} 
         	
+        	// On vérifie où sont nos pions 3 et 10 correspondent aux charIndex
+        	// du début du tableau de jeu dans le fichier .txt
         	for(int i = 3; i < 10; i++) {
         		int y = Integer.parseInt(String.valueOf(currL.charAt(2)));
+        		//retour horizontal
         		if (currL.charAt(i) == '<') {
         			Board.add(y-2, new Point(i-3,1));
         		}
+        		//aller horizontal
 				if (currL.charAt(i) == '>') {
 					Board.add(y-2, new Point(i-3,0));
-				        		}
+				}
+				//aller vertical      		}
 				if (currL.charAt(i) == '^') {
 					Board.add(i+1, new Point(y-1,0));
 				}
+				//retour horizontal
 				if (currL.charAt(i) == 'v') {
 					Board.add(i+1, new Point(y-1,1));
-				}
-        	}	
+				}	
+        	}
         }
+        //On ferme notre buffer
         br.close();
 		
 	}
 
 	@Override
-	public void saveToFile(String fileName) {
-		// TODO Auto-generated method stub
+	public void saveToFile(String fileName) throws IOException {
+		//On crée notre fichier 
+		File myFile = new File(fileName);
+		//on déclare les variables Point horizontaux et verticaux pour 
+		//y voir plus clair par la suite
+		Point hor, vert;
 		
+		//On vérifie que le fichier à bien été ouvert correctement
+	    if (myFile.createNewFile()) {
+	    	System.out.println("File created: " + myFile.getName());
+	    } else {
+	        System.out.println("File already exists.");
+	    }
+	    
+	    //Initialisation du filewriter
+	    FileWriter myWriter = new FileWriter("filename.txt");
+	    
+	    //Boucle for pour le nombre de lignes à écrire
+	    for(int i = 0; i < 11; i++) {
+	    	//Première ligne
+	    	if(i == 0) {
+	    		myWriter.write("% Sauvegarde");
+	    	} 
+	    	//Deuxième et avant dernière
+	    	else if(i == 1 || i == 9) {
+	    		myWriter.write("% ABCDEFG");
+	    	}
+	    	//Dernière ligne
+	    	else if(i == 10) {
+	    		myWriter.write(joueur.toString());
+	    	}
+	    	//Les autres correspondant au plateau de jeu ( coord y )
+	    	else if(i > 1 && i < 9) {
+	    		//On rajoute le numéro de la ligne en début ... 
+	    		myWriter.write("0"+(i-1)+" ");
+	    	
+	    		// ( coord x )
+	    		for(int j = 0; j < 7; j++) {
+	    			//Lorsque les coordonnées corresoondent à tel ou tel pion 
+	    			//on les rajoute dans le fichier texte avec le symbole correspondant.
+	    			for(int pt = 0; pt < 5; pt++) {
+	    				hor = Board.get(pt);
+	    				vert = Board.get(pt);
+	    				if(hor.x == i) {
+	    					//On vérifie le sens de déplacement
+	    					if(hor.y == 0) myWriter.write(">");
+	    					if(hor.y == 1) myWriter.write("<");
+	    				}
+	    				if(vert.x == j) {
+	    					if(vert.y == 0) myWriter.write("^");
+	    					if(vert.y == 1) myWriter.write("v");
+	    				}
+	    				//Sinon on écrit un point.
+	    				else {
+	    					myWriter.write(".");
+	    				}
+	    			}
+	    		}
+	    		//...Et fin du plateau.
+	    		myWriter.write("0"+(i-1)+" ");
+	    	 }
+	      }
+	    //On ferme le writer
+	    myWriter.close();
+	    System.out.println("Successfully wrote to the file.");
 	}
 
 	@Override

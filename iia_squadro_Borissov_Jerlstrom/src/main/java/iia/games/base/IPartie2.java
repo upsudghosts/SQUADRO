@@ -14,8 +14,9 @@ public interface IPartie2 {
 	/** sauve la configuration de l’ ́etat courant (plateau et pi`eces restantes) * dans un fichier
 	* @param fileName le nom du fichier `a sauvegarder
 	* Le format doit ^etre compatible avec celui utilis ́e pour la lecture.
+	 * @throws IOException 
 	  */
-	public void saveToFile(String fileName);
+	public void saveToFile(String fileName) throws IOException;
 	
 	/** indique si le coup <move> est valide pour le joueur <player>
 	* sur le plateau courant
