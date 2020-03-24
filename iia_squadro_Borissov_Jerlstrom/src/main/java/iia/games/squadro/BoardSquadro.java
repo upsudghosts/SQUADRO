@@ -124,7 +124,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 
 	/**
 	 * Methode permettant de jouer un coup, renvoyant le nouveau board apres l'avoir
-	 * jou�
+	 * joue
 	 */
 	@Override
 	public BoardSquadro play(MoveSquadro move, RoleSquadro role) {
@@ -448,7 +448,11 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 	}
 
 	
-	
+
+	/**
+	 * Methode permettant de jouer un coup, renvoyant le nouveau board apres l'avoir
+	 * joue
+	 */
 	@Override
 	public void play(String move, String role) {
 		
