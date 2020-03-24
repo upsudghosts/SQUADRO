@@ -4,14 +4,15 @@ import iia.games.base.ABoard;
 import iia.games.base.IPartie2;
 
 import java.awt.Point;
-import java.io.FileInputStream;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro> implements IPartie2 {
 	ArrayList<Point> Board;
 	static ArrayList<Point> vitesse = new ArrayList<Point>();
+	RoleSquadro joueur;
 
 	/*
 	 * INTERFACE
@@ -258,16 +259,39 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 
 	@Override
 	public void setFromFile(String fileName) throws IOException {
-		// TODO Auto-generated method stub
+		ArrayList<Point>Init = new ArrayList<Point>();
 		//the file to be opened for reading  
-		FileInputStream fn =new FileInputStream("Demo.txt");       
-		Scanner sc=new Scanner(fn);    //file to be scanned  
-		//returns true if there is another line to read  
-		while(sc.hasNextLine())  {  
-			System.out.println(sc.nextLine());      //returns the line that was skipped  
-		}  
-		sc.close();     //closes the scanner  
-		
+		String currL;
+
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+
+        while ((currL = br.readLine()) != null) {
+        	if(currL.charAt(0) == '%') {
+        		//On ne fait rien : ligne commentaire
+        	}
+        	
+        	if(currL.contains("horizontal")) {
+        		joueur = RoleSquadro.VERTICAL;
+        	} 
+        	else if(currL.contains("vertical")) {
+        		joueur = RoleSquadro.HORIZONTAL;	
+        	} 
+        	
+        	if(currL.contains("^")) {
+        		currL.charAt(2)
+        	}
+        	if(currL.contains("^")) {
+        		
+        	}
+        	if(currL.contains("^")) {
+	
+        	}
+        	if(currL.contains("^")) {
+	
+        	}
+        	
+        }
+        br.close();
 		
 	}
 
