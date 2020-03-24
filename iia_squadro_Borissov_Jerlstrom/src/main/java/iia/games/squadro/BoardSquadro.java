@@ -41,7 +41,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		ArrayList<Integer> adv = new ArrayList<Integer>();
 		int piece = move.getPiece();
 		boolean consec = true;// si les pions sont consec
-		int xy = Board.get(piece).x + 1;
+		int xy = coord;
 		int AR = Board.get(piece).y;// Aller ou Retour
 
 		switch (role) {
@@ -61,7 +61,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				break;
 
 			case 1:
-				for (int i = 4 + xy; i > 0; i--) {
+				for (int i = 4 + xy; i > 4; i--) {
 					if (Board.get(i).x == 5 - piece && consec) {
 						adv.add(i);
 					} else {
@@ -78,7 +78,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			switch (AR) {
 
 			case 0:
-				for (int i = 0; i < 5 - xy; i++) {
+				for (int i = 5 - xy; i >= 0; i--) {
 					if (Board.get(i).x == piece - 4 && consec) {
 						adv.add(i);
 					} else {
@@ -88,7 +88,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				break;
 
 			case 1:
-				for (int i = 5 - xy; i > 0; i--) {
+				for (int i = 5 - xy; i < 5; i++) {
 					if (Board.get(i).x == piece - 4 && consec) {
 						adv.add(i);
 					} else {
@@ -119,77 +119,13 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		ArrayList<Integer> ListPieceAdv = new ArrayList<Integer>();
 		int nbAdv;
 
-		switch (role) {
-
-		case HORIZONTAL:
-			if (AR == 0) {
-				for (int i = 0; i < speed; i++) {
-
-					int x = BoardInt.Board.get(piece).x;
-					ListPieceAdv = getAdv(move, role, x+1);
-					nbAdv = ListPieceAdv.size();
-
-					if (ListPieceAdv.size() == 0) {
-						if (x + 1 > 6)
-							BoardInt.Board.set(piece, new Point(6, 1));
-						else
-							BoardInt.Board.set(piece, new Point(x + 1, 0));
-
-					} else {
-						if (x + nbAdv > 6)
-							BoardInt.Board.set(piece, new Point(6, 1));
-						else
-							BoardInt.Board.set(piece, new Point(x + nbAdv, 0));
-						for (int adv : ListPieceAdv) {
-							if (BoardInt.Board.get(adv).y == 1)
-								BoardInt.Board.set(adv, new Point(6, 1));
-							else
-								BoardInt.Board.set(adv, new Point(0, 0));
-						}
-
-						break;
-					}
-
-				}
-
-			} else {
-				for(int i = 0; i < speed; i++) {
-					
-					int x = BoardInt.Board.get(piece).x;
-					ListPieceAdv = getAdv(move, role, x+1);
-					nbAdv = ListPieceAdv.size();
-					if(ListPieceAdv.size() == 0) {
-						if(x-1 < 0)
-							BoardInt.Board.set(piece, new Point(0, 1));
-						else
-							BoardInt.Board.set(piece, new Point(x - 1, 1));
-					} else {
-						if(x - nbAdv < 0)
-							BoardInt.Board.set(piece, new Point(0, 1));
-						else
-							BoardInt.Board.set(piece, new Point(x - nbAdv, 1));
-						for (int adv : ListPieceAdv) {
-							if (BoardInt.Board.get(adv).y == 1)
-								BoardInt.Board.set(adv, new Point(6, 1));
-							else
-								BoardInt.Board.set(adv, new Point(0, 0));
-						}
-
-						break;
-						
-					}
-					
-				}
-				
-			}
-			break;
-
-		case VERTICAL:
+		if (AR == 0) {//pour l'aller
 			for (int i = 0; i < speed; i++) {
 
 				int x = BoardInt.Board.get(piece).x;
-				ListPieceAdv = getAdv(move, role, x+1);
+				ListPieceAdv = getAdv(move, role, x + 1);
 				nbAdv = ListPieceAdv.size();
+
 				if (ListPieceAdv.size() == 0) {
 					if (x + 1 > 6)
 						BoardInt.Board.set(piece, new Point(6, 1));
@@ -208,10 +144,40 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 							BoardInt.Board.set(adv, new Point(0, 0));
 					}
 
+					break;
 				}
 
 			}
-			break;
+
+		} else {//pour le retour
+			for (int i = 0; i < speed; i++) {
+
+				int x = BoardInt.Board.get(piece).x;
+				ListPieceAdv = getAdv(move, role, x + 1);
+				nbAdv = ListPieceAdv.size();
+				if (ListPieceAdv.size() == 0) {
+					if (x - 1 < 0)
+						BoardInt.Board.set(piece, new Point(0, 1));
+					else
+						BoardInt.Board.set(piece, new Point(x - 1, 1));
+				} else {
+					if (x - nbAdv < 0)
+						BoardInt.Board.set(piece, new Point(0, 1));
+					else
+						BoardInt.Board.set(piece, new Point(x - nbAdv, 1));
+					for (int adv : ListPieceAdv) {
+						if (BoardInt.Board.get(adv).y == 1)
+							BoardInt.Board.set(adv, new Point(6, 1));
+						else
+							BoardInt.Board.set(adv, new Point(0, 0));
+					}
+
+					break;
+
+				}
+
+			}
+
 		}
 
 		return BoardInt;
@@ -275,6 +241,6 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		}
 
 		return false;
-	}	 
+	}
 
 }
