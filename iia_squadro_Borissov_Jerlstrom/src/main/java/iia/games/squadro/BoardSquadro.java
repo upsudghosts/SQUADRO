@@ -1,11 +1,17 @@
 package iia.games.squadro;
 
 import iia.games.base.ABoard;
+import iia.games.base.IPartie2;
 
 import java.awt.Point;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
-public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro> {
+public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro> implements IPartie2 {
 	ArrayList<Point> Board;
 	static ArrayList<Point> vitesse = new ArrayList<Point>();
 
@@ -208,7 +214,6 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 
 			}
 			break;
-
 		}
 
 		return moves;
@@ -240,6 +245,51 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			return true;
 		}
 
+		return false;
+	}
+
+	@Override
+	public void setFromFile(String fileName) throws IOException {
+		// TODO Auto-generated method stub
+		//the file to be opened for reading  
+		FileInputStream fn =new FileInputStream("Demo.txt");       
+		Scanner sc=new Scanner(fn);    //file to be scanned  
+		//returns true if there is another line to read  
+		while(sc.hasNextLine())  {  
+			System.out.println(sc.nextLine());      //returns the line that was skipped  
+		}  
+		sc.close();     //closes the scanner  
+		
+		
+	}
+
+	@Override
+	public void saveToFile(String fileName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isValidMove(String move, String player) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String[] possibleMoves(String player) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void play(String move, String role) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean gameOver() {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
