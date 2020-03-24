@@ -12,10 +12,8 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
      */
 	public BoardSquadro() {
 		Board = new ArrayList<>();
-		int xy;
 		for(int i = 0; i < 10; i++) {
-			xy = i%5;
-			Board.add(new Point(xy, 0));
+			Board.add(new Point(0, 0));
 		}
 	}
 	
@@ -37,7 +35,33 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 
     @Override
     public ArrayList<MoveSquadro> possibleMoves(RoleSquadro role) {
-        return null;
+    	ArrayList<MoveSquadro> moves = new ArrayList<MoveSquadro>();
+
+    	switch(role) {
+    	
+    	case HORIZONTAL:
+    		for(int i = 0; i < 5; i++) {
+    			
+    			if(!(Board.get(i).x == 0 && Board.get(i).y == 1)) {
+    				moves.add(new MoveSquadro(i));
+    				
+    			}
+    		}
+    		break;
+    		
+    	case VERTICAL:
+    		for(int i = 5; i < 10; i++) {
+    			
+    			if(!(Board.get(i).x == 0 && Board.get(i).y == 1)) {
+    				moves.add(new MoveSquadro(i));
+    			}
+    			
+    		}
+    		break;
+    		
+    	}
+    	
+        return moves;
     }
 
 
@@ -59,6 +83,12 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 
     @Override
     public boolean isValidMove(MoveSquadro move, RoleSquadro role) {
+    		ArrayList<MoveSquadro> moves = possibleMoves(role);
+    		
+    		if(moves.contains(move)) {
+    			return true;
+    		}
+    		
             return false;
     }
 
