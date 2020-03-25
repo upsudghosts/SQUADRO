@@ -284,212 +284,218 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		return false;// sinon c'est un coup invalide, TRICHE!
 	}
 
-	
-	
-	
 	@Override
 	public void setFromFile(String fileName) throws IOException {
 		for (int i = 0; i < 10; i++) {
-			Board.add(new Point(0, 0));//on ajoute les positions de depart de tout les pions
+			Board.add(new Point(0, 0));// on ajoute les positions de depart de tout les pions
 		}
-		//the file to be opened for reading  
+		// the file to be opened for reading
 		String currL;
-		
-		//initialise le buffer pour lecture du fichier
-        BufferedReader br = new BufferedReader(new FileReader(fileName));
-        
-        //tant qu'on lit des lignes
-        while ((currL = br.readLine()) != null) {
-        	if(currL.charAt(0) == '%') {
-        		//On ne fait rien : ligne commentaire
-        	}
-        	
-        	//On vérifie si nos lignes contiennent les caractères voulus
-        	if(currL.contains("horizontal")) { //Dernier coup horizontal
-        		joueur = RoleSquadro.VERTICAL; //Celui qui joue est donc vertical
-        	} 
-        	else if(currL.contains("vertical")) { //L'inverse
-        		joueur = RoleSquadro.HORIZONTAL;	
-        	} 
-        	
-        	// On vérifie où sont nos pions 3 et 10 correspondent aux charIndex
-        	// du début du tableau de jeu dans le fichier .txt
-        	for(int i = 3; i < 10; i++) {
-        		int y = Integer.parseInt(String.valueOf(currL.charAt(2)));
-        		//retour horizontal
-        		if (currL.charAt(i) == '<') {
-        			Board.add(y-2, new Point(i-3,1));
-        		}
-        		//aller horizontal
+
+		// initialise le buffer pour lecture du fichier
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+
+		// tant qu'on lit des lignes
+		while ((currL = br.readLine()) != null) {
+			if (currL.charAt(0) == '%') {
+				// On ne fait rien : ligne commentaire
+			}
+
+			// On vérifie si nos lignes contiennent les caractères voulus
+			if (currL.contains("horizontal")) { // Dernier coup horizontal
+				joueur = RoleSquadro.VERTICAL; // Celui qui joue est donc vertical
+			} else if (currL.contains("vertical")) { // L'inverse
+				joueur = RoleSquadro.HORIZONTAL;
+			}
+
+			// On vérifie où sont nos pions 3 et 10 correspondent aux charIndex
+			// du début du tableau de jeu dans le fichier .txt
+			for (int i = 3; i < 10; i++) {
+				int y = Integer.parseInt(String.valueOf(currL.charAt(2)));
+				// retour horizontal
+				if (currL.charAt(i) == '<') {
+					Board.add(y - 2, new Point(i - 3, 1));
+				}
+				// aller horizontal
 				if (currL.charAt(i) == '>') {
-					Board.add(y-2, new Point(i-3,0));
+					Board.add(y - 2, new Point(i - 3, 0));
 				}
-				//aller vertical      		}
+				// aller vertical }
 				if (currL.charAt(i) == '^') {
-					Board.add(i+1, new Point(y-1,0));
+					Board.add(i + 1, new Point(y - 1, 0));
 				}
-				//retour horizontal
+				// retour horizontal
 				if (currL.charAt(i) == 'v') {
-					Board.add(i+1, new Point(y-1,1));
-				}	
-        	}
-        }
-        //On ferme notre buffer
-        br.close();
+					Board.add(i + 1, new Point(y - 1, 1));
+				}
+			}
+		}
+		// On ferme notre buffer
+		br.close();
 	}
 
 	@Override
 	public void saveToFile(String fileName) throws IOException {
-		//On crée notre fichier 
+		// On crée notre fichier
 		File myFile = new File(fileName);
-		//on déclare les variables Point horizontaux et verticaux pour 
-		//y voir plus clair par la suite
+		// on déclare les variables Point horizontaux et verticaux pour
+		// y voir plus clair par la suite
 		Point hor, vert;
-		
-		//On vérifie que le fichier à bien été ouvert correctement
-	    if (myFile.createNewFile()) {
-	    	System.out.println("File created: " + myFile.getName());
-	    } else {
-	        System.out.println("File already exists.");
-	    }
-	    
-	    //Initialisation du filewriter
-	    FileWriter myWriter = new FileWriter("filename.txt");
-	    
-	    //Boucle for pour le nombre de lignes à écrire
-	    for(int i = 0; i < 11; i++) {
-	    	//Première ligne
-	    	if(i == 0) {
-	    		myWriter.write("% Sauvegarde");
-	    	} 
-	    	//Deuxième et avant dernière
-	    	else if(i == 1 || i == 9) {
-	    		myWriter.write("% ABCDEFG");
-	    	}
-	    	//Dernière ligne
-	    	else if(i == 10) {
-	    		myWriter.write(joueur.toString());
-	    	}
-	    	//Les autres correspondant au plateau de jeu ( coord y )
-	    	else if(i > 1 && i < 9) {
-	    		//On rajoute le numéro de la ligne en début ... 
-	    		myWriter.write("0"+(i-1)+" ");
-	    	
-	    		// ( coord x )
-	    		for(int j = 0; j < 7; j++) {
-	    			//Lorsque les coordonnées corresoondent à tel ou tel pion 
-	    			//on les rajoute dans le fichier texte avec le symbole correspondant.
-	    			for(int pt = 0; pt < 5; pt++) {
-	    				hor = Board.get(pt);
-	    				vert = Board.get(pt);
-	    				if(hor.x == i) {
-	    					//On vérifie le sens de déplacement
-	    					if(hor.y == 0) myWriter.write(">");
-	    					if(hor.y == 1) myWriter.write("<");
-	    				}
-	    				if(vert.x == j) {
-	    					if(vert.y == 0) myWriter.write("^");
-	    					if(vert.y == 1) myWriter.write("v");
-	    				}
-	    				//Sinon on écrit un point.
-	    				else {
-	    					myWriter.write(".");
-	    				}
-	    			}
-	    		}
-	    		//...Et fin du plateau.
-	    		myWriter.write("0"+(i-1)+" ");
-	    	 } 
-	      }
-	    //On ferme le writer
-	    myWriter.close();
-	    System.out.println("Successfully wrote to the file.");
+
+		// On vérifie que le fichier à bien été ouvert correctement
+		if (myFile.createNewFile()) {
+			System.out.println("File created: " + myFile.getName());
+		} else {
+			System.out.println("File already exists.");
+		}
+
+		// Initialisation du filewriter
+		FileWriter myWriter = new FileWriter("filename.txt");
+
+		// Boucle for pour le nombre de lignes à écrire
+		for (int i = 0; i < 11; i++) {
+			// Première ligne
+			if (i == 0) {
+				myWriter.write("% Sauvegarde");
+			}
+			// Deuxième et avant dernière
+			else if (i == 1 || i == 9) {
+				myWriter.write("% ABCDEFG");
+			}
+			// Dernière ligne
+			else if (i == 10) {
+				myWriter.write(joueur.toString());
+			}
+			// Les autres correspondant au plateau de jeu ( coord y )
+			else if (i > 1 && i < 9) {
+				// On rajoute le numéro de la ligne en début ...
+				myWriter.write("0" + (i - 1) + " ");
+
+				// ( coord x )
+				for (int j = 0; j < 7; j++) {
+					// Lorsque les coordonnées corresoondent à tel ou tel pion
+					// on les rajoute dans le fichier texte avec le symbole correspondant.
+					for (int pt = 0; pt < 5; pt++) {
+						hor = Board.get(pt);
+						vert = Board.get(pt);
+						if (hor.x == i) {
+							// On vérifie le sens de déplacement
+							if (hor.y == 0)
+								myWriter.write(">");
+							if (hor.y == 1)
+								myWriter.write("<");
+						}
+						if (vert.x == j) {
+							if (vert.y == 0)
+								myWriter.write("^");
+							if (vert.y == 1)
+								myWriter.write("v");
+						}
+						// Sinon on écrit un point.
+						else {
+							myWriter.write(".");
+						}
+					}
+				}
+				// ...Et fin du plateau.
+				myWriter.write("0" + (i - 1) + " ");
+			}
+		}
+		// On ferme le writer
+		myWriter.close();
+		System.out.println("Successfully wrote to the file.");
 	}
-	
+
 	/** Methode verifiant si un coup est valide */
 	@Override
 	public boolean isValidMove(String move, String player) {
 		String[] moves = possibleMoves(player);// on recupere les moves possibles
-		for(int i = 0; i < moves.length; i++) {//on parcours les moves
-			if(moves[i] == move) return true;//si le move figure dans le tableau, c'est un move valide
+		for (int i = 0; i < moves.length; i++) {// on parcours les moves
+			if (moves[i] == move)
+				return true;// si le move figure dans le tableau, c'est un move valide
 		}
 
 		return false;// sinon c'est un coup invalide, TRICHE!
 	}
-	
-	
+
 	/**
 	 * Methode renvoyant un ArrayList de MoveSquadro contenant tout les moves
 	 * possibles pour un joueur (vertical ou horizontal)
 	 */
 	@Override
 	public String[] possibleMoves(String player) {
-		char charDeb, charFin;//les caracteres qu'on va utiliser dans le string
-		String res1, res2, resfinal;//les strings intermediaires ainsi que le string final
-		int intDeb, intFin;//les entiers du move de debut et du move de fin
-		String[] moves = new String[5];//un tableau de string contenant tout les moves (au max 5)
-		
-		switch(player) {
-		case "vertical"://si c'est le joueur vertical qui joue
-			for(int i = 5; i < 10; i++) {//on parcours les 5 dernieres cases de la liste
+		char charDeb, charFin;// les caracteres qu'on va utiliser dans le string
+		String res1, res2, resfinal;// les strings intermediaires ainsi que le string final
+		int intDeb, intFin;// les entiers du move de debut et du move de fin
+		String[] moves = new String[5];// un tableau de string contenant tout les moves (au max 5)
+
+		switch (player) {
+		case "vertical":// si c'est le joueur vertical qui joue
+			for (int i = 5; i < 10; i++) {// on parcours les 5 dernieres cases de la liste
 				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {// si ce n'est pas une piece qui a fait un aller
 																	// retour
-					intDeb = Board.get(i).x;//on joue en vertical, les lettres ne changent pas, uniquement les chiffres
-					if(Board.get(i).y == 0) {//on verifie que l'on est sur un aller
+					intDeb = Board.get(i).x;// on joue en vertical, les lettres ne changent pas, uniquement les chiffres
+					if (Board.get(i).y == 0) {// on verifie que l'on est sur un aller
 						intFin = intDeb + vitesse.get(i).x;
-						if(intFin > 6) intFin = 6;//on verifie que l'on ne sort pas du tableau
-					}else {//si on est sur un retour
+						if (intFin > 6)
+							intFin = 6;// on verifie que l'on ne sort pas du tableau
+					} else {// si on est sur un retour
 						intFin = intDeb - vitesse.get(i).y;
-						if(intFin < 0) intFin = 0;//on verifie que on ne sort pas du tableau
+						if (intFin < 0)
+							intFin = 0;// on verifie que on ne sort pas du tableau
 					}
-					
-					charDeb = intToChar(i%5);//on met un modulo 5 pour avoir les bonnes lettres
-					intDeb = intDeb+1;//les int du debut prennent +1 car on commence a 1 et pas 0
-					intFin = intFin+1;//les int de fin prennent +1 car on commence a 1 et pas 0
-					
-					res1 = String.valueOf(charDeb+intDeb);//on concatene pour le move de depart
-					res2 = String.valueOf(charDeb+intFin);//on concatene pour le move d'arrivee
-					
-					resfinal = combMove(res1, res2);//on concatene les 2 pour avoir le move sous la forme correcte
-					moves[i%5] = resfinal;//on l'ajoute au bon endroit dans la liste
+
+					charDeb = intToChar(i % 5);// on met un modulo 5 pour avoir les bonnes lettres
+					intDeb = intDeb + 1;// les int du debut prennent +1 car on commence a 1 et pas 0
+					intFin = intFin + 1;// les int de fin prennent +1 car on commence a 1 et pas 0
+
+					res1 = String.valueOf(charDeb + intDeb);// on concatene pour le move de depart
+					res2 = String.valueOf(charDeb + intFin);// on concatene pour le move d'arrivee
+
+					resfinal = combMove(res1, res2);// on concatene les 2 pour avoir le move sous la forme correcte
+					moves[i % 5] = resfinal;// on l'ajoute au bon endroit dans la liste
 				}
 			}
-			break;//on s'arrette qd on a fait tout les pieces
-			
-		case "horizontal"://si c'est le joueur horizontal
+			break;// on s'arrette qd on a fait tout les pieces
+
+		case "horizontal":// si c'est le joueur horizontal
 			int interm;
-			for(int i = 0; i < 5; i++) {//on parcours les 5 premieres cases du tableau
-				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {//si ce n'est pas une piece qui a deja fait un aller retour
-					intDeb = i;//le debut prends la valeur i, on est en horizontal, seul les caracteres changes
-					charDeb = intToChar(Board.get(i).x);//on transforme le caractere de debut
-					if(Board.get(i).y == 0) {//si on est sur un aller
+			for (int i = 0; i < 5; i++) {// on parcours les 5 premieres cases du tableau
+				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {// si ce n'est pas une piece qui a deja fait un
+																	// aller retour
+					intDeb = i;// le debut prends la valeur i, on est en horizontal, seul les caracteres
+								// changes
+					charDeb = intToChar(Board.get(i).x);// on transforme le caractere de debut
+					if (Board.get(i).y == 0) {// si on est sur un aller
 						interm = Board.get(i).x + vitesse.get(i).x;
-						if(interm > 6) interm = 6;//on verifie que l'on ne sort pas du tableau
-					}else {
+						if (interm > 6)
+							interm = 6;// on verifie que l'on ne sort pas du tableau
+					} else {
 						interm = Board.get(i).x - vitesse.get(i).x;
-						if(interm < 0) interm = 0;//on verifie que l'on ne sort pas du tableau
+						if (interm < 0)
+							interm = 0;// on verifie que l'on ne sort pas du tableau
 					}
-					charFin = intToChar(interm);//on transforme en caractere
-					
-					intDeb += 1;//la valeur du debut prends +1 car on commence a 1 et pas 0
-					res1 = String.valueOf(charDeb+intDeb);//on creer le premier move
-					res2 = String.valueOf(charFin+intDeb);//on creer le deuxieme move
-					
-					resfinal = combMove(res1, res2);//on transforme sous la bonne forme
-					moves[i] = resfinal;//on l'ajoute au bon endroit
+					charFin = intToChar(interm);// on transforme en caractere
+
+					intDeb += 1;// la valeur du debut prends +1 car on commence a 1 et pas 0
+					res1 = String.valueOf(charDeb + intDeb);// on creer le premier move
+					res2 = String.valueOf(charFin + intDeb);// on creer le deuxieme move
+
+					resfinal = combMove(res1, res2);// on transforme sous la bonne forme
+					moves[i] = resfinal;// on l'ajoute au bon endroit
 				}
-				
+
 			}
 			break;
 		}
-	
+
 		return null;
 	}
-	
+
 	/** Methode renvoyant un caractere pour un entier donne */
 	public char intToChar(int a) {
 		char res = ' ';
-		switch(a) {
+		switch (a) {
 		case 0:
 			res = 'A';
 			break;
@@ -511,17 +517,15 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		case 6:
 			res = 'G';
 			break;
-			
+
 		}
 		return res;
 	}
-	
+
 	/** Methode fusionant 2 strings afin d'avoir la bonne forme */
 	public String combMove(String m1, String m2) {
-		return m1+"-"+m2;
+		return m1 + "-" + m2;
 	}
-
-	
 
 	/**
 	 * Methode permettant de jouer un coup, renvoyant le nouveau board apres l'avoir
@@ -529,20 +533,76 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 	 */
 	@Override
 	public void play(String move, String role) {
-		
+		BoardSquadro BoardInt = this.copy();// on travaille sur une copie
+
 		String[] moves = move.split("");
-		int case1 = stringToInt(moves[0]);
-		int case2 = stringToInt(moves[3]);
-		int int1 = Integer.parseInt(moves[1]) - 1;
-		int int2 = Integer.parseInt(moves[4]) - 1;
-		
+		int case1 = stringToInt(moves[0]);// on recupere l'equivalent en int des lettres
+		int case2 = stringToInt(moves[3]);// on recupere l'equivalent en int des lettres
+		int int1 = Integer.parseInt(moves[1]) - 1;// on recupere les entiers
+		int int2 = Integer.parseInt(moves[4]) - 1;// on recupere les entiers
+
+		boolean adv = false;// on initialise les adversaires a false
+		switch (role) {
+		case "horizontal":// si c'est le joueur horizontal qui joue
+			if (BoardInt.Board.get(int1).y == 0) {//si on est en train de faire un aller
+				if (adv) {//si il n'y a pas d'adversaire, on avance sans se soucier
+					if (case2 == 6)//on verifie si on a fini notre trajet
+						BoardInt.Board.set(int1, new Point(case2, 1));
+					else
+						BoardInt.Board.set(int1, new Point(case2, 0));
+				} else {
+					//TODO
+				}
+				
+			} else {//si on est en train de faire un retour
+				if (adv) {//si il n'y a pas d'adversaire
+					if (case2 == 0)//on verifie si on a fini notre trajet
+						BoardInt.Board.set(int1, new Point(case2, 1));
+					else
+						BoardInt.Board.set(int1, new Point(case2, 1));
+				} else {
+					
+					//TODO
+				}
+
+			}
+			break;
+			
+			
+			
+			
+		case "vertical"://si c'est le joueur vertical qui joue, uniquement les lettres changent
+			if (BoardInt.Board.get(case1).y == 0) {//si on est en train de faire un aller
+				if (adv) {//si il n'y a pas d'adversaire, on avance sans se soucier
+					if (int2 == 6)//on verifie si on a fini notre trajet
+						BoardInt.Board.set(case1, new Point(6, 1));
+					else
+						BoardInt.Board.set(case1, new Point(int2, 0));
+				} else {//si il y a des adversaires a sauter
+					//TODO
+				}
+			} else {//si on est sur le retour
+				if (adv) {//si il n'y a pas d'adversaire
+					if (int2 == 0)//on verifie si on a fini notre trajet
+						BoardInt.Board.set(case1, new Point(0, 1));
+					else
+						BoardInt.Board.set(case1, new Point(int2, 1));
+				} else {//si il y a des adversaires a sauter
+					
+					//TODO
+				}
+			}
+			break;
+		}
+		//DANS LES TODO, ON NE SAIT PAS ENCORE QUOI FAIRE CAR IL Y A UN DOUTE SUR COMMENT AGIR LORSQU'IL Y A UNE COLLISION ENTRE PIECES: EST CE ICI
+		//OU DANS LA METHODE POSSIBLE MOVES QU'IL FAUT S'EN OCCUPER
 
 	}
-	
+
 	/** Methode renvoyant un entier pour un string donne */
 	public int stringToInt(String a) {
 		int res = 0;
-		switch(a) {
+		switch (a) {
 		case "A":
 			res = 0;
 			break;
@@ -564,14 +624,14 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		case "G":
 			res = 6;
 			break;
-			
+
 		}
 		return res;
 	}
 
 	@Override
 	public boolean gameOver() {
-		// TODO Auto-generated method stub
+		//TODO, je ne comprends pas vraiment la difference avec l'autre game over???
 		return false;
 	}
 
