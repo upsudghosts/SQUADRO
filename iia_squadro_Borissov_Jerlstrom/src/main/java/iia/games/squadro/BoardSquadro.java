@@ -127,7 +127,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 
 	/**
 	 * Methode permettant de jouer un coup, renvoyant le nouveau board apres l'avoir
-	 * jou�
+	 * joue
 	 */
 	@Override
 	public BoardSquadro play(MoveSquadro move, RoleSquadro role) {
@@ -421,7 +421,8 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 	    myWriter.close();
 	    System.out.println("Successfully wrote to the file.");
 	}
-
+	
+	/** Methode verifiant si un coup est valide */
 	@Override
 	public boolean isValidMove(String move, String player) {
 		String[] moves = possibleMoves(player);// on recupere les moves possibles
@@ -431,62 +432,67 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 
 		return false;// sinon c'est un coup invalide, TRICHE!
 	}
-
+	
+	
+	/**
+	 * Methode renvoyant un ArrayList de MoveSquadro contenant tout les moves
+	 * possibles pour un joueur (vertical ou horizontal)
+	 */
 	@Override
 	public String[] possibleMoves(String player) {
-		char charDeb, charFin;
-		String res1, res2, resfinal;
-		int intDeb, intFin;
-		String[] moves = new String[5];
+		char charDeb, charFin;//les caracteres qu'on va utiliser dans le string
+		String res1, res2, resfinal;//les strings intermediaires ainsi que le string final
+		int intDeb, intFin;//les entiers du move de debut et du move de fin
+		String[] moves = new String[5];//un tableau de string contenant tout les moves (au max 5)
 		
 		switch(player) {
-		case "vertical":
-			for(int i = 5; i < 10; i++) {
+		case "vertical"://si c'est le joueur vertical qui joue
+			for(int i = 5; i < 10; i++) {//on parcours les 5 dernieres cases de la liste
 				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {// si ce n'est pas une piece qui a fait un aller
 																	// retour
-					intDeb = Board.get(i).x;
-					if(Board.get(i).y == 0) {
+					intDeb = Board.get(i).x;//on joue en vertical, les lettres ne changent pas, uniquement les chiffres
+					if(Board.get(i).y == 0) {//on verifie que l'on est sur un aller
 						intFin = intDeb + vitesse.get(i).x;
-						if(intFin > 6) intFin = 6;
-					}else {
+						if(intFin > 6) intFin = 6;//on verifie que l'on ne sort pas du tableau
+					}else {//si on est sur un retour
 						intFin = intDeb - vitesse.get(i).y;
-						if(intFin < 0) intFin = 0;
+						if(intFin < 0) intFin = 0;//on verifie que on ne sort pas du tableau
 					}
 					
-					charDeb = intToChar(i%5);
-					intDeb = intDeb+1;
-					intFin = intFin+1;
+					charDeb = intToChar(i%5);//on met un modulo 5 pour avoir les bonnes lettres
+					intDeb = intDeb+1;//les int du debut prennent +1 car on commence a 1 et pas 0
+					intFin = intFin+1;//les int de fin prennent +1 car on commence a 1 et pas 0
 					
-					res1 = String.valueOf(charDeb+intDeb);
-					res2 = String.valueOf(charDeb+intFin);
+					res1 = String.valueOf(charDeb+intDeb);//on concatene pour le move de depart
+					res2 = String.valueOf(charDeb+intFin);//on concatene pour le move d'arrivee
 					
-					resfinal = combMove(res1, res2);
-					moves[i%5] = resfinal;
+					resfinal = combMove(res1, res2);//on concatene les 2 pour avoir le move sous la forme correcte
+					moves[i%5] = resfinal;//on l'ajoute au bon endroit dans la liste
 				}
 			}
-			break;
+			break;//on s'arrette qd on a fait tout les pieces
 			
-		case "horizontal":
+		case "horizontal"://si c'est le joueur horizontal
 			int interm;
-			for(int i = 0; i < 5; i++) {
-				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {
-					intDeb = i;
-					charDeb = intToChar(Board.get(i).x);
-					if(Board.get(i).y == 0) {
+			for(int i = 0; i < 5; i++) {//on parcours les 5 premieres cases du tableau
+				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {//si ce n'est pas une piece qui a deja fait un aller retour
+					intDeb = i;//le debut prends la valeur i, on est en horizontal, seul les caracteres changes
+					charDeb = intToChar(Board.get(i).x);//on transforme le caractere de debut
+					if(Board.get(i).y == 0) {//si on est sur un aller
 						interm = Board.get(i).x + vitesse.get(i).x;
-						if(interm > 6) interm = 6;
+						if(interm > 6) interm = 6;//on verifie que l'on ne sort pas du tableau
 					}else {
 						interm = Board.get(i).x - vitesse.get(i).x;
-						if(interm < 0) interm = 0;
+						if(interm < 0) interm = 0;//on verifie que l'on ne sort pas du tableau
 					}
-					charFin = intToChar(interm);
+					charFin = intToChar(interm);//on transforme en caractere
 					
-					intDeb += 1;
-					res1 = String.valueOf(charDeb+intDeb);
-					res2 = String.valueOf(charFin+intDeb);
+					intDeb += 1;//la valeur du debut prends +1 car on commence a 1 et pas 0
+					res1 = String.valueOf(charDeb+intDeb);//on creer le premier move
+					res2 = String.valueOf(charFin+intDeb);//on creer le deuxieme move
 					
-					resfinal = combMove(res1, res2);
-					moves[i] = resfinal;
+					resfinal = combMove(res1, res2);//on transforme sous la bonne forme
+					moves[i] = resfinal;//on l'ajoute au bon endroit
 				}
 				
 			}
@@ -496,6 +502,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		return null;
 	}
 	
+	/** Methode renvoyant un caractere pour un entier donne */
 	public char intToChar(int a) {
 		char res = ' ';
 		switch(a) {
@@ -525,14 +532,57 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		return res;
 	}
 	
+	/** Methode fusionant 2 strings afin d'avoir la bonne forme */
 	public String combMove(String m1, String m2) {
 		return m1+"-"+m2;
 	}
 
+	
+
+	/**
+	 * Methode permettant de jouer un coup, renvoyant le nouveau board apres l'avoir
+	 * joue
+	 */
 	@Override
 	public void play(String move, String role) {
-		// TODO Auto-generated method stub
+		
+		String[] moves = move.split("");
+		int case1 = stringToInt(moves[0]);
+		int case2 = stringToInt(moves[3]);
+		int int1 = Integer.parseInt(moves[1]) - 1;
+		int int2 = Integer.parseInt(moves[4]) - 1;
+		
 
+	}
+	
+	/** Methode renvoyant un entier pour un string donne */
+	public int stringToInt(String a) {
+		int res = 0;
+		switch(a) {
+		case "A":
+			res = 0;
+			break;
+		case "B":
+			res = 1;
+			break;
+		case "C":
+			res = 2;
+			break;
+		case "D":
+			res = 3;
+			break;
+		case "E":
+			res = 4;
+			break;
+		case "F":
+			res = 5;
+			break;
+		case "G":
+			res = 6;
+			break;
+			
+		}
+		return res;
 	}
 
 	@Override
