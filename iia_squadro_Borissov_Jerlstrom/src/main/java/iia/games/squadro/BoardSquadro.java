@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro> implements IPartie2 {
 	ArrayList<Point> Board;
 	static ArrayList<Point> vitesse = new ArrayList<Point>();
-	RoleSquadro joueur;
+	RoleSquadro joueur = RoleSquadro.HORIZONTAL;
 
 	/*
 	 * INTERFACE
@@ -35,6 +35,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			if (i == 2 || i == 7)// les pions qui ont une vitesse de 2 puis 2
 				vitesse.add(new Point(2, 2));
 		}
+		
 	}
 
 	/** Methode cr�ant un board a partir d'un ArrayList de points */
@@ -183,7 +184,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			for (int i = 0; i < speed; i++) {// on fait le nombre de pas necessaires
 
 				int x = BoardInt.Board.get(piece).x;// la position ou l'on se situe en ce moment
-				ListPieceAdv = getAdv(move, role, x + 1);// recupere les adversaires se trouvant a la suite
+				ListPieceAdv = getAdv(move, role, x - 1);// recupere les adversaires se trouvant a la suite
 				nbAdv = ListPieceAdv.size();// et leur nombre
 				if (nbAdv == 0) {// si aucun adversaire a sauter
 					if (x - 1 < 0)// on verifie que l'on ne sort pas du tableau
@@ -260,14 +261,18 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			if (j1 >= 4 || j2 >= 4) {// si l'un des deux joueurs a 4 pions qui ont fait un aller retour
 				return true;// la partie est finie
 			}
-			if (i < 5 && Board.get(i).x == 0 && Board.get(i).y == 1)// si dans les 5 premiers points du tableau, il y a
-																	// des pieces ayant fait un aller retour
+			// si dans les 5 premiers points du tableau, il y a												// des pieces ayant fait un aller retour
+						
+			if (i < 5 && Board.get(i).x == 0 && Board.get(i).y == 1) {
 				j1++;// le joueur 1 "gagne" un point
-			if (i >= 5 && Board.get(i).x == 0 && Board.get(i).y == 1)// si dans les 5 points suivant du tableau, il y a
-																		// des pieces ayant fait un aller retour
+			}
+			// si dans les 5 points suivant du tableau, il y a
+			// des pieces ayant fait un aller retour
+			if (i >= 5 && Board.get(i).x == 0 && Board.get(i).y == 1) {
 				j2++;// le joueur 2 "gagne" un point
-		}
-
+			}
+		}				
+		System.out.println("J1 : " + j1 + " | J2 : " + j2);
 		return false;// si aucun des deux joueurs n'a 4 pieces ayant fait un aller retour, la partie
 						// n'est pas finie
 	}
@@ -284,6 +289,18 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		return false;// sinon c'est un coup invalide, TRICHE!
 	}
 
+
+	/**Methode permettant de definir un joueur**/
+	public void setJoueur(RoleSquadro role) {
+		joueur = role;
+	}
+	
+	/**Methode permettant de récupere le joueur actuel**/
+	public RoleSquadro getJoueur() {
+		return joueur;
+	}
+	
+	
 	@Override
 	public void setFromFile(String fileName) throws IOException {
 		for (int i = 0; i < 10; i++) {
@@ -291,32 +308,33 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		}
 		// the file to be opened for reading
 		String currL;
-
-		// initialise le buffer pour lecture du fichier
-		BufferedReader br = new BufferedReader(new FileReader(fileName));
-
-		// tant qu'on lit des lignes
-		while ((currL = br.readLine()) != null) {
-			if (currL.charAt(0) == '%') {
-				// On ne fait rien : ligne commentaire
-			}
-
-			// On vérifie si nos lignes contiennent les caractères voulus
-			if (currL.contains("horizontal")) { // Dernier coup horizontal
-				joueur = RoleSquadro.VERTICAL; // Celui qui joue est donc vertical
-			} else if (currL.contains("vertical")) { // L'inverse
-				joueur = RoleSquadro.HORIZONTAL;
-			}
-
-			// On vérifie où sont nos pions 3 et 10 correspondent aux charIndex
-			// du début du tableau de jeu dans le fichier .txt
-			for (int i = 3; i < 10; i++) {
-				int y = Integer.parseInt(String.valueOf(currL.charAt(2)));
-				// retour horizontal
-				if (currL.charAt(i) == '<') {
-					Board.add(y - 2, new Point(i - 3, 1));
-				}
-				// aller horizontal
+		
+		//initialise le buffer pour lecture du fichier
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+        
+        //tant qu'on lit des lignes
+        while ((currL = br.readLine()) != null) {
+        	if(currL.charAt(0) == '%') {
+        		//On ne fait rien : ligne commentaire
+        	}
+        	
+        	//On verifie si nos lignes contiennent les caracteres voulus
+        	if(currL.contains("horizontal")) { //Dernier coup horizontal
+        		joueur = RoleSquadro.VERTICAL; //Celui qui joue est donc vertical
+        	} 
+        	else if(currL.contains("vertical")) { //L'inverse
+        		joueur = RoleSquadro.HORIZONTAL;	
+        	} 
+        	
+        	// On verifie où sont nos pions 3 et 10 correspondent aux charIndex
+        	// du debut du tableau de jeu dans le fichier .txt
+        	for(int i = 3; i < 10; i++) {
+        		int y = Integer.parseInt(String.valueOf(currL.charAt(2)));
+        		//retour horizontal
+        		if (currL.charAt(i) == '<') {
+        			Board.add(y-2, new Point(i-3,1));
+        		}
+        		//aller horizontal
 				if (currL.charAt(i) == '>') {
 					Board.add(y - 2, new Point(i - 3, 0));
 				}
@@ -336,74 +354,76 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 
 	@Override
 	public void saveToFile(String fileName) throws IOException {
-		// On crée notre fichier
+		//On cree notre fichier 
+
 		File myFile = new File(fileName);
 		// on déclare les variables Point horizontaux et verticaux pour
 		// y voir plus clair par la suite
 		Point hor, vert;
 
-		// On vérifie que le fichier à bien été ouvert correctement
-		if (myFile.createNewFile()) {
-			System.out.println("File created: " + myFile.getName());
-		} else {
-			System.out.println("File already exists.");
-		}
+		
+		//On verifie que le fichier a bien ete ouvert correctement
+	    if (myFile.createNewFile()) {
+	    	System.out.println("File created: " + myFile.getName());
+	    } else {
+	        System.out.println("File already exists.");
+	    }
+	    
+	    //Initialisation du filewriter
+	    FileWriter myWriter = new FileWriter(fileName);
+	    
+	    //Boucle for pour le nombre de lignes à écrire
+	    for(int i = 0; i < 11; i++) {
+	    	//Premiere ligne
+	    	if(i == 0) {
+	    		myWriter.write("% Sauvegarde\n");
+	    	} 
+	    	//Deuxieme et avant derniere
+	    	else if(i == 1 || i == 9) {
+	    		myWriter.write("% ABCDEFG\n");
+	    	}
+	    	//Derniere ligne
+	    	else if(i == 10) {
+	    		myWriter.write(joueur.toString()+"\n");
+	    	}
+	    	//Les autres correspondant au plateau de jeu ( coord y )
+	    	else if(i > 1 && i < 9) {
+	    		//On rajoute le numéro de la ligne en début ... 
+	    		myWriter.write("0"+(i-1)+" ");
+	    	
+	    		// ( coord x )
+	    		for(int j = 0; j < 7; j++) {
+	    			//Lorsque les coordonnées corresoondent a tel ou tel pion 
+	    			//on les rajoute dans le fichier texte avec le symbole correspondant.
+	    			for(int pt = 0; pt < 5; pt++) {
+	    				hor = Board.get(pt);
+	    				vert = Board.get(pt+5);
+	    				if(hor.x == j) {
+	    					//On vérifie le sens de déplacement
+	    					if(hor.y == 0) myWriter.write(">");
+	    					if(hor.y == 1) myWriter.write("<");
+	    					break;
+	    				}
+	    				if(vert.x == i) {
+	    					if(vert.y == 0) myWriter.write("^");
+	    					if(vert.y == 1) myWriter.write("v");
+	    					break;
+	    				}
+	    				//Sinon on écrit un point.
+	    				else {
+	    					myWriter.write(".");
+	    					break;
+	    				}
+	    			}
+	    		}
+	    		//...Et fin du plateau.
+	    		myWriter.write("0"+(i-1)+" \n");
+	    	 } 
+	      }
+	    //On ferme le writer
+	    myWriter.close();
+	    System.out.println("Successfully wrote to the file.");
 
-		// Initialisation du filewriter
-		FileWriter myWriter = new FileWriter("filename.txt");
-
-		// Boucle for pour le nombre de lignes à écrire
-		for (int i = 0; i < 11; i++) {
-			// Première ligne
-			if (i == 0) {
-				myWriter.write("% Sauvegarde");
-			}
-			// Deuxième et avant dernière
-			else if (i == 1 || i == 9) {
-				myWriter.write("% ABCDEFG");
-			}
-			// Dernière ligne
-			else if (i == 10) {
-				myWriter.write(joueur.toString());
-			}
-			// Les autres correspondant au plateau de jeu ( coord y )
-			else if (i > 1 && i < 9) {
-				// On rajoute le numéro de la ligne en début ...
-				myWriter.write("0" + (i - 1) + " ");
-
-				// ( coord x )
-				for (int j = 0; j < 7; j++) {
-					// Lorsque les coordonnées corresoondent à tel ou tel pion
-					// on les rajoute dans le fichier texte avec le symbole correspondant.
-					for (int pt = 0; pt < 5; pt++) {
-						hor = Board.get(pt);
-						vert = Board.get(pt);
-						if (hor.x == i) {
-							// On vérifie le sens de déplacement
-							if (hor.y == 0)
-								myWriter.write(">");
-							if (hor.y == 1)
-								myWriter.write("<");
-						}
-						if (vert.x == j) {
-							if (vert.y == 0)
-								myWriter.write("^");
-							if (vert.y == 1)
-								myWriter.write("v");
-						}
-						// Sinon on écrit un point.
-						else {
-							myWriter.write(".");
-						}
-					}
-				}
-				// ...Et fin du plateau.
-				myWriter.write("0" + (i - 1) + " ");
-			}
-		}
-		// On ferme le writer
-		myWriter.close();
-		System.out.println("Successfully wrote to the file.");
 	}
 
 	/** Methode verifiant si un coup est valide */
