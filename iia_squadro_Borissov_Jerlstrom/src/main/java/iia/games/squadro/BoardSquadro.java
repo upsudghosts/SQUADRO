@@ -229,11 +229,12 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			for (int i = 0; i < 5; i++) {// on parcours toutes ses pieces
 
 				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {// si ce n'est pas une piece qui a fait un aller
-					System.out.println("ON A PRIS UN MOVE DES HORIZONTALS");												// retour
+																// retour
 					moves.add(new MoveSquadro(i));// on l'ajoute dans les pieces pouvant etre bougees
 					
 				}
 			}
+			System.out.println("ON A PRIS UN MOVE DES HORIZONTALS");
 			break;// on s'arrette
 
 		case VERTICAL:// si c'est le joueur vertical
@@ -242,11 +243,11 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {// si ce n'est pas une piece qui a fait un aller
 																	// retour
 					moves.add(new MoveSquadro(i));// on l'ajoute dans les pieces pouvant etre bougees
-					System.out.println("ON A PRIS UN MOVE DES VERTICALS");
+					
 				}
 
 			}
-
+			System.out.println("ON A PRIS UN MOVE DES VERTICALS");
 			break;// on s'arrette
 		}
 		//System.out.println(moves.size());
