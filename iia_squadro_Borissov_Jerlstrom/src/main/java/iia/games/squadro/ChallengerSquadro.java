@@ -91,10 +91,10 @@ public class ChallengerSquadro implements IChallenger {
 				i = piece + 2;
 				
 				charDeb = board.intToChar(avant.x);
-				m1 = String.valueOf(charDeb + i);
+				m1 = charDeb + String.valueOf(i);
 				
 				charFin = board.intToChar(apres.x);
-				m2 = String.valueOf(charFin + i);
+				m2 = charFin + String.valueOf(i);
 				
 				moveF = board.combMove(m1, m2);
 				break;
@@ -103,10 +103,10 @@ public class ChallengerSquadro implements IChallenger {
 				i = (piece%5) + 1;
 				
 				charDeb = board.intToChar(7 - avant.x);
-				m1 = String.valueOf(board.intToChar(i)+charDeb);
+				m1 = board.intToChar(i)+String.valueOf(charDeb);
 				
 				charFin = board.intToChar(7 - apres.x);
-				m2 = String.valueOf(board.intToChar(i)+charFin);
+				m2 = board.intToChar(i)+String.valueOf(charFin);
 				
 				moveF = board.combMove(m1, m2);
 				break;

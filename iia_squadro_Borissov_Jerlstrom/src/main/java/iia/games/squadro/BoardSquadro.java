@@ -537,6 +537,8 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		case 6:
 			res = 'G';
 			break;
+		default:
+			break;
 
 		}
 		return res;
