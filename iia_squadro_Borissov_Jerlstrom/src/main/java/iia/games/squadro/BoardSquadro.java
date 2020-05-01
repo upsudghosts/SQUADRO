@@ -450,7 +450,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		String[] moves = new String[5];// un tableau de string contenant tout les moves (au max 5)
 
 		switch (player) {
-		case "vertical":// si c'est le joueur vertical qui joue
+		case "VERTICAL":// si c'est le joueur vertical qui joue
 			for (int i = 5; i < 10; i++) {// on parcours les 5 dernieres cases de la liste
 				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {// si ce n'est pas une piece qui a fait un aller
 																	// retour
@@ -478,7 +478,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			}
 			break;// on s'arrette qd on a fait tout les pieces
 
-		case "horizontal":// si c'est le joueur horizontal
+		case "HORIZONTAL":// si c'est le joueur horizontal
 			int interm;
 			for (int i = 0; i < 5; i++) {// on parcours les 5 premieres cases du tableau
 				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {// si ce n'est pas une piece qui a deja fait un
@@ -563,7 +563,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 
 		boolean adv = false;// on initialise les adversaires a false
 		switch (role) {
-		case "horizontal":// si c'est le joueur horizontal qui joue
+		case "HORIZONTAL":// si c'est le joueur horizontal qui joue
 			if (BoardInt.Board.get(int1).y == 0) {//si on est en train de faire un aller
 				if (adv) {//si il n'y a pas d'adversaire, on avance sans se soucier
 					if (case2 == 6)//on verifie si on a fini notre trajet
@@ -591,7 +591,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			
 			
 			
-		case "vertical"://si c'est le joueur vertical qui joue, uniquement les lettres changent
+		case "VERTICAL"://si c'est le joueur vertical qui joue, uniquement les lettres changent
 			if (BoardInt.Board.get(case1).y == 0) {//si on est en train de faire un aller
 				if (adv) {//si il n'y a pas d'adversaire, on avance sans se soucier
 					if (int2 == 6)//on verifie si on a fini notre trajet
