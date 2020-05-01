@@ -46,8 +46,8 @@ public class ChallengerSquadro implements IChallenger {
 		MoveSquadro realMove = stringToMove(move, joueur);
 		board = board.play(realMove, joueur);
 		
-		System.out.println("==============================================================");
-		System.out.println("AUGUSTE");
+		//System.out.println("==============================================================");
+		//System.out.println("AUGUSTE");
 		System.out.println(board.Board);
 	}
 
@@ -56,15 +56,16 @@ public class ChallengerSquadro implements IChallenger {
 		MoveSquadro realMove = stringToMove(move, adversaire);
 		board = board.play(realMove, adversaire);
 		
-		System.out.println("==============================================================");
-		System.out.println("CHAMPION");
+	//	System.out.println("==============================================================");
+	//	System.out.println("CHAMPION");
 		System.out.println(board.Board);
 		
 	}
 
 	@Override
 	public String bestMove() {
-		MoveSquadro move = algo.bestMove(board, adversaire, HeuristicSquadro.hZero);
+		MoveSquadro move = algo.bestMove(board, joueur, HeuristicSquadro.hZero);
+		System.out.println(moveToString(move));
 		return moveToString(move);
 	}
 
