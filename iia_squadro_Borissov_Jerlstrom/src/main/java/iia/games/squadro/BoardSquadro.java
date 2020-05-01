@@ -558,11 +558,13 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 
 		String[] moves = move.split("");
 		int case1 = stringToInt(moves[0]);// on recupere l'equivalent en int des lettres
-		System.out.println("CASE1: " + case1);
+		
 		int case2 = stringToInt(moves[3]);// on recupere l'equivalent en int des lettres
-		System.out.println("CASE2: " + case2);
+		
 		int int1 = Integer.parseInt(moves[1]) - 1;// on recupere les entiers
+		System.out.println("CASE1: " + int1);
 		int int2 = Integer.parseInt(moves[4]) - 1;// on recupere les entiers
+		System.out.println("CASE2: " + int2);
 
 		boolean adv = false;// on initialise les adversaires a false
 		switch (role) {
