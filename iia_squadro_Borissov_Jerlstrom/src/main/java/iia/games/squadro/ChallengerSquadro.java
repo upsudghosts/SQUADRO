@@ -47,6 +47,7 @@ public class ChallengerSquadro implements IChallenger {
 		board = board.play(realMove, joueur);
 		
 		System.out.println("==============================================================");
+		System.out.println("AUGUSTE");
 		System.out.println(board.Board);
 	}
 
@@ -54,6 +55,10 @@ public class ChallengerSquadro implements IChallenger {
 	public void otherPlay(String move) {
 		MoveSquadro realMove = stringToMove(move, adversaire);
 		board = board.play(realMove, adversaire);
+		
+		System.out.println("==============================================================");
+		System.out.println("CHAMPION");
+		System.out.println(board.Board);
 		
 	}
 
