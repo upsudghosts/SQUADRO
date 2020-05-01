@@ -569,12 +569,12 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		boolean adv = false;// on initialise les adversaires a false
 		switch (role) {
 		case "HORIZONTAL":// si c'est le joueur horizontal qui joue
-			if (Board.get(int1).y == 0) {//si on est en train de faire un aller
+			if (Board.get(int1-1).y == 0) {//si on est en train de faire un aller
 				if (adv) {//si il n'y a pas d'adversaire, on avance sans se soucier
 					if (case2 == 6)//on verifie si on a fini notre trajet
-						Board.set(int1, new Point(case2, 1));
+						Board.set(int1-1, new Point(case2, 1));
 					else
-						Board.set(int1, new Point(case2, 0));
+						Board.set(int1-1, new Point(case2, 0));
 				} else {
 					//TODO
 				}
@@ -582,9 +582,9 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			} else {//si on est en train de faire un retour
 				if (adv) {//si il n'y a pas d'adversaire
 					if (case2 == 0)//on verifie si on a fini notre trajet
-						Board.set(int1, new Point(case2, 1));
+						Board.set(int1-1, new Point(case2, 1));
 					else
-						Board.set(int1, new Point(case2, 1));
+						Board.set(int1-1, new Point(case2, 1));
 				} else {
 					
 					//TODO
@@ -596,22 +596,22 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			
 			
 			
-		case "VERTICAL"://si c'est le joueur vertical qui joue, uniquement les lettres changent
-			if (Board.get(case1).y == 0) {//si on est en train de faire un aller
+		case "VERTICAL"://si c'est le joueur vertical qui joue, uniquement les chiffres changent
+			if (Board.get(case1 + 4).y == 0) {//si on est en train de faire un aller
 				if (adv) {//si il n'y a pas d'adversaire, on avance sans se soucier
-					if (int2 == 6)//on verifie si on a fini notre trajet
+					if (int2 == 0)//on verifie si on a fini notre trajet
 						Board.set(case1, new Point(6, 1));
 					else
-						Board.set(case1, new Point(int2, 0));
+						Board.set(case1, new Point(6-int2, 0));
 				} else {//si il y a des adversaires a sauter
 					//TODO
 				}
 			} else {//si on est sur le retour
 				if (adv) {//si il n'y a pas d'adversaire
-					if (int2 == 0)//on verifie si on a fini notre trajet
+					if (int2 == 6)//on verifie si on a fini notre trajet
 						Board.set(case1, new Point(0, 1));
 					else
-						Board.set(case1, new Point(int2, 1));
+						Board.set(case1, new Point(6-int2, 1));
 				} else {//si il y a des adversaires a sauter
 					
 					//TODO
