@@ -80,7 +80,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				break;
 
 			case 1:// cas ou on est sur un retour
-				for (int i = 4 + xy-2; i > 4; i--) {// on parcours les pieces adverses (dans "l'autre sens")
+				for (int i = 4 + xy; i > 4; i--) {// on parcours les pieces adverses (dans "l'autre sens")
 					if (Board.get(i).x == 5 - piece && consec) {// si jamais ils se situent sur la meme ligne que la
 																// piece jouee
 						adv.add(i);// on ajoute cette piece a notre tableau
@@ -109,7 +109,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				break;
 
 			case 1:// si on est sur un retour
-				for (int i = 5 - xy+2; i < 5; i++) {// on parcours les pieces adverses
+				for (int i = 5 - xy; i < 5; i++) {// on parcours les pieces adverses
 					if (Board.get(i).x == piece - 4 && consec) {// si jamais elles se trouvent sur la meme ligne que la
 																// piece jouee
 						adv.add(i);// on la rajoute au tableau
