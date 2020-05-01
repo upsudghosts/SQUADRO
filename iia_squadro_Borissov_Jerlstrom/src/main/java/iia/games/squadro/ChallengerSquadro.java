@@ -41,12 +41,14 @@ public class ChallengerSquadro implements IChallenger {
 
 	@Override
 	public void iPlay(String move) {
-		board.play(move, joueur.toString());
+		MoveSquadro realMove = stringToMove(move, joueur);
+		board = board.play(realMove, joueur);
 	}
 
 	@Override
 	public void otherPlay(String move) {
-		board.play(move, adversaire.toString());
+		MoveSquadro realMove = stringToMove(move, adversaire);
+		board = board.play(realMove, adversaire);
 		
 	}
 
@@ -72,6 +74,28 @@ public class ChallengerSquadro implements IChallenger {
 	}
 	
 	
+	
+	public MoveSquadro stringToMove(String move, RoleSquadro joueur) {
+		String[] moveS = move.split("");
+		String pieceABouger;
+		int piece = -1;
+		switch(joueur) {
+		case HORIZONTAL:
+			pieceABouger = moveS[1];
+			piece = Integer.parseInt(pieceABouger) - 2;
+			break;
+		case VERTICAL:
+			pieceABouger = moveS[0];
+			piece = board.stringToInt(pieceABouger);
+			break;
+		}
+		
+		System.out.println(piece);
+		
+		MoveSquadro moveToRet = new MoveSquadro(piece);
+		
+		return moveToRet;
+	}
 	
 	
 	private String moveToString(MoveSquadro move) {
