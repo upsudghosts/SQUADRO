@@ -34,7 +34,7 @@ public class ChallengerSquadro implements IChallenger {
 			adversaire = RoleSquadro.HORIZONTAL;
 			break;
 		}
-		this.algo = new Minimax(joueur, adversaire);
+		this.algo = new Minimax<MoveSquadro, RoleSquadro, BoardSquadro>(joueur, adversaire);
 		board = new BoardSquadro();
 		
 	}
