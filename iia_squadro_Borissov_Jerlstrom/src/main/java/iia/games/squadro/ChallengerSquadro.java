@@ -78,7 +78,7 @@ public class ChallengerSquadro implements IChallenger {
 		int i;
 		char charDeb, charFin;
 		String m1, m2;
-		String moveF = null;
+		String moveF = "";
 		
 		Point avant = board.Board.get(piece);
 		
@@ -112,6 +112,7 @@ public class ChallengerSquadro implements IChallenger {
 				break;
 			
 		}
+		System.out.println(moveF);
 		return moveF;
 	}
 }
