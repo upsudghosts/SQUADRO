@@ -39,12 +39,12 @@ public class ChallengerSquadro implements IChallenger {
 
 	@Override
 	public void iPlay(String move) {
-		board = board.play(move, joueur.toString());
+		board.play(move, joueur.toString());
 	}
 
 	@Override
 	public void otherPlay(String move) {
-		board = board.play(move, adversaire.toString());
+		board.play(move, adversaire.toString());
 		
 	}
 

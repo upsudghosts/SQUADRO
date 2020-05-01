@@ -553,8 +553,8 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 	 * Methode permettant de jouer un coup, renvoyant le nouveau board apres l'avoir
 	 * joue
 	 */
-	public BoardSquadro play(String move, String role) {
-		BoardSquadro BoardInt = this.copy();// on travaille sur une copie
+	public void play(String move, String role) {
+		
 
 		String[] moves = move.split("");
 		int case1 = stringToInt(moves[0]);// on recupere l'equivalent en int des lettres
@@ -565,12 +565,12 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		boolean adv = false;// on initialise les adversaires a false
 		switch (role) {
 		case "HORIZONTAL":// si c'est le joueur horizontal qui joue
-			if (BoardInt.Board.get(int1).y == 0) {//si on est en train de faire un aller
+			if (Board.get(int1).y == 0) {//si on est en train de faire un aller
 				if (adv) {//si il n'y a pas d'adversaire, on avance sans se soucier
 					if (case2 == 6)//on verifie si on a fini notre trajet
-						BoardInt.Board.set(int1, new Point(case2, 1));
+						Board.set(int1, new Point(case2, 1));
 					else
-						BoardInt.Board.set(int1, new Point(case2, 0));
+						Board.set(int1, new Point(case2, 0));
 				} else {
 					//TODO
 				}
@@ -578,9 +578,9 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			} else {//si on est en train de faire un retour
 				if (adv) {//si il n'y a pas d'adversaire
 					if (case2 == 0)//on verifie si on a fini notre trajet
-						BoardInt.Board.set(int1, new Point(case2, 1));
+						Board.set(int1, new Point(case2, 1));
 					else
-						BoardInt.Board.set(int1, new Point(case2, 1));
+						Board.set(int1, new Point(case2, 1));
 				} else {
 					
 					//TODO
@@ -593,21 +593,21 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			
 			
 		case "VERTICAL"://si c'est le joueur vertical qui joue, uniquement les lettres changent
-			if (BoardInt.Board.get(case1).y == 0) {//si on est en train de faire un aller
+			if (Board.get(case1).y == 0) {//si on est en train de faire un aller
 				if (adv) {//si il n'y a pas d'adversaire, on avance sans se soucier
 					if (int2 == 6)//on verifie si on a fini notre trajet
-						BoardInt.Board.set(case1, new Point(6, 1));
+						Board.set(case1, new Point(6, 1));
 					else
-						BoardInt.Board.set(case1, new Point(int2, 0));
+						Board.set(case1, new Point(int2, 0));
 				} else {//si il y a des adversaires a sauter
 					//TODO
 				}
 			} else {//si on est sur le retour
 				if (adv) {//si il n'y a pas d'adversaire
 					if (int2 == 0)//on verifie si on a fini notre trajet
-						BoardInt.Board.set(case1, new Point(0, 1));
+						Board.set(case1, new Point(0, 1));
 					else
-						BoardInt.Board.set(case1, new Point(int2, 1));
+						Board.set(case1, new Point(int2, 1));
 				} else {//si il y a des adversaires a sauter
 					
 					//TODO
@@ -617,7 +617,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		}
 		//DANS LES TODO, ON NE SAIT PAS ENCORE QUOI FAIRE CAR IL Y A UN DOUTE SUR COMMENT AGIR LORSQU'IL Y A UNE COLLISION ENTRE PIECES: EST CE ICI
 		//OU DANS LA METHODE POSSIBLE MOVES QU'IL FAUT S'EN OCCUPER
-		return BoardInt;
+		
 	}
 
 	/** Methode renvoyant un entier pour un string donne */
