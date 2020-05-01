@@ -230,7 +230,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {// si ce n'est pas une piece qui a fait un aller
 																	// retour
 					moves.add(new MoveSquadro(i));// on l'ajoute dans les pieces pouvant etre bougees
-
+					
 				}
 			}
 			break;// on s'arrette
@@ -247,7 +247,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 
 			break;// on s'arrette
 		}
-
+		System.out.println(moves);
 		return moves;// on renvoie l'ArrayList contenant toutes les pieces pouvant etre bougees
 	}
 
@@ -597,8 +597,10 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			
 			
 		case "VERTICAL"://si c'est le joueur vertical qui joue, uniquement les chiffres changent
+			/*
 			System.out.println("CASE1: " + int1);
 			System.out.println("CASE2: " + int2);
+			*/
 			if (Board.get(case1 + 4).y == 0) {//si on est en train de faire un aller
 				if (adv) {//si il n'y a pas d'adversaire, on avance sans se soucier
 					if (int2 == 0)//on verifie si on a fini notre trajet
