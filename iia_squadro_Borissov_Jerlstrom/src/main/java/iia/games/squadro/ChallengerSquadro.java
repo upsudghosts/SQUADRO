@@ -43,6 +43,9 @@ public class ChallengerSquadro implements IChallenger {
 	public void iPlay(String move) {
 		MoveSquadro realMove = stringToMove(move, joueur);
 		board = board.play(realMove, joueur);
+		
+		System.out.println("==============================================================");
+		System.out.println(board.Board);
 	}
 
 	@Override
@@ -90,7 +93,6 @@ public class ChallengerSquadro implements IChallenger {
 			break;
 		}
 		
-		System.out.println(piece);
 		
 		MoveSquadro moveToRet = new MoveSquadro(piece);
 		
