@@ -133,7 +133,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 	public BoardSquadro play(MoveSquadro move, RoleSquadro role) {
 		BoardSquadro BoardInt = this.copy();// on travaille sur une copie
 		int piece = move.getPiece();// on recupere la piece a bouger
-		
+		System.out.println("PIECE CHOISIE = " + piece);
 
 		int AR = Board.get(piece).y;// determine si on est sur un aller ou un retour (0 aller, 1 retour)
 		int speed;// la vitesse == le nombre de pas a faire
