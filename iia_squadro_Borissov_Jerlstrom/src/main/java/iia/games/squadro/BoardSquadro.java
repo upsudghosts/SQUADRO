@@ -80,7 +80,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				break;
 
 			case 1:// cas ou on est sur un retour
-				for (int i = 4 + xy; i > 4; i--) {// on parcours les pieces adverses (dans "l'autre sens")
+				for (int i = 4 + xy-2; i > 4; i--) {// on parcours les pieces adverses (dans "l'autre sens")
 					if (Board.get(i).x == 5 - piece && consec) {// si jamais ils se situent sur la meme ligne que la
 																// piece jouee
 						adv.add(i);// on ajoute cette piece a notre tableau
@@ -109,7 +109,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				break;
 
 			case 1:// si on est sur un retour
-				for (int i = 5 - xy; i < 5; i++) {// on parcours les pieces adverses
+				for (int i = 5 - xy+2; i < 5; i++) {// on parcours les pieces adverses
 					if (Board.get(i).x == piece - 4 && consec) {// si jamais elles se trouvent sur la meme ligne que la
 																// piece jouee
 						adv.add(i);// on la rajoute au tableau
@@ -272,7 +272,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				j2++;// le joueur 2 "gagne" un point
 			}
 		}				
-		System.out.println("J1 : " + j1 + " | J2 : " + j2);
+		//System.out.println("J1 : " + j1 + " | J2 : " + j2);
 		return false;// si aucun des deux joueurs n'a 4 pieces ayant fait un aller retour, la partie
 						// n'est pas finie
 	}
@@ -281,8 +281,9 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 	@Override
 	public boolean isValidMove(MoveSquadro move, RoleSquadro role) {
 		ArrayList<MoveSquadro> moves = possibleMoves(role);// on recupere les moves possibles
-
+		System.out.println("YOUHOUUUUU");
 		if (moves.contains(move)) {// si jamais l'ArrayList contient ce move,...
+			
 			return true;// ... il s'agit d'un coup valide
 		}
 
