@@ -247,7 +247,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 
 			break;// on s'arrette
 		}
-		System.out.println(moves);
+		System.out.println(moves.size());
 		return moves;// on renvoie l'ArrayList contenant toutes les pieces pouvant etre bougees
 	}
 
