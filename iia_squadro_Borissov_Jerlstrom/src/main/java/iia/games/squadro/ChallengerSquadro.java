@@ -84,7 +84,7 @@ public class ChallengerSquadro implements IChallenger {
 		
 		BoardSquadro boardCopy = board.copy();
 		System.out.println("AVANT:" + boardCopy.Board.get(piece).x);
-		boardCopy.play(move, joueur);
+		boardCopy = boardCopy.play(move, joueur);
 		System.out.println("APRES:" + boardCopy.Board.get(piece).x);
 		Point apres = boardCopy.Board.get(piece);
 		
