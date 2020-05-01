@@ -553,8 +553,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 	 * Methode permettant de jouer un coup, renvoyant le nouveau board apres l'avoir
 	 * joue
 	 */
-	@Override
-	public void play(String move, String role) {
+	public BoardSquadro play(String move, String role) {
 		BoardSquadro BoardInt = this.copy();// on travaille sur une copie
 
 		String[] moves = move.split("");
@@ -618,7 +617,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		}
 		//DANS LES TODO, ON NE SAIT PAS ENCORE QUOI FAIRE CAR IL Y A UN DOUTE SUR COMMENT AGIR LORSQU'IL Y A UNE COLLISION ENTRE PIECES: EST CE ICI
 		//OU DANS LA METHODE POSSIBLE MOVES QU'IL FAUT S'EN OCCUPER
-
+		return BoardInt;
 	}
 
 	/** Methode renvoyant un entier pour un string donne */
