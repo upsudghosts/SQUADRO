@@ -102,11 +102,10 @@ public class ChallengerSquadro implements IChallenger {
 			case VERTICAL:
 				i = (piece%5) + 1;
 				
-				charDeb = board.intToChar(7 - avant.x);
-				m1 = board.intToChar(i)+String.valueOf(charDeb);
 				
-				charFin = board.intToChar(7 - apres.x);
-				m2 = board.intToChar(i)+String.valueOf(charFin);
+				m1 = board.intToChar(i)+String.valueOf(7 - avant.x);
+				
+				m2 = board.intToChar(i)+String.valueOf(7 - apres.x);
 				
 				moveF = board.combMove(m1, m2);
 				break;
