@@ -455,7 +455,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			for (int i = 5; i < 10; i++) {// on parcours les 5 dernieres cases de la liste
 				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {// si ce n'est pas une piece qui a fait un aller
 																	// retour
-					intDeb = Board.get(i).x;// on joue en vertical, les lettres ne changent pas, uniquement les chiffres
+					intDeb = 7 - Board.get(i).x;// on joue en vertical, les lettres ne changent pas, uniquement les chiffres
 					if (Board.get(i).y == 0) {// on verifie que l'on est sur un aller
 						intFin = intDeb + vitesse.get(i).x;
 						if (intFin > 6)
