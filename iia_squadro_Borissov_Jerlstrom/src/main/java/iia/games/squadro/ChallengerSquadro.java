@@ -3,12 +3,14 @@ package iia.games.squadro;
 import java.awt.Point;
 
 import iia.games.algo.Minimax;
+import iia.games.base.IAlgo;
 import iia.games.base.IChallenger;
 
 public class ChallengerSquadro implements IChallenger {
 	RoleSquadro joueur;
 	RoleSquadro adversaire;
 	BoardSquadro board;
+	IAlgo<MoveSquadro, RoleSquadro, BoardSquadro> algo;
 
     public MoveSquadro pickMove(MoveSquadro enemyMove) {
         return null;
@@ -32,7 +34,7 @@ public class ChallengerSquadro implements IChallenger {
 			adversaire = RoleSquadro.HORIZONTAL;
 			break;
 		}
-		
+		this.algo = new Minimax(joueur, adversaire);
 		board = new BoardSquadro();
 		
 	}
@@ -50,8 +52,7 @@ public class ChallengerSquadro implements IChallenger {
 
 	@Override
 	public String bestMove() {
-		Minimax mimax = new Minimax(joueur, adversaire);
-		MoveSquadro move = (MoveSquadro) mimax.bestMove(board, joueur, HeuristicSquadro.hZero);
+		MoveSquadro move = algo.bestMove(board, joueur, HeuristicSquadro.hZero);
 		return moveToString(move);
 	}
 
