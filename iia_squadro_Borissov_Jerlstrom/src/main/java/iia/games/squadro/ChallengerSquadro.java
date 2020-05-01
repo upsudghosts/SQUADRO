@@ -37,6 +37,7 @@ public class ChallengerSquadro implements IChallenger {
 		}
 		this.algo = new AlwaysFirst<MoveSquadro, RoleSquadro, BoardSquadro>();
 		board = new BoardSquadro();
+		board.setJoueur(joueur);
 		
 	}
 
