@@ -562,9 +562,9 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		int case2 = stringToInt(moves[3]);// on recupere l'equivalent en int des lettres
 		
 		int int1 = Integer.parseInt(moves[1]) - 1;// on recupere les entiers
-		System.out.println("CASE1: " + int1);
+
 		int int2 = Integer.parseInt(moves[4]) - 1;// on recupere les entiers
-		System.out.println("CASE2: " + int2);
+		
 
 		boolean adv = false;// on initialise les adversaires a false
 		switch (role) {
@@ -597,6 +597,8 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			
 			
 		case "VERTICAL"://si c'est le joueur vertical qui joue, uniquement les chiffres changent
+			System.out.println("CASE1: " + int1);
+			System.out.println("CASE2: " + int2);
 			if (Board.get(case1 + 4).y == 0) {//si on est en train de faire un aller
 				if (adv) {//si il n'y a pas d'adversaire, on avance sans se soucier
 					if (int2 == 0)//on verifie si on a fini notre trajet
