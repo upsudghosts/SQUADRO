@@ -155,14 +155,14 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				nbAdv = ListPieceAdv.size();// on a le nombre d'adversaires a la suite
 
 				if (nbAdv == 0) {// si aucun adversaire
-					if (x + 1 > 6)// on regarde juste si on ne va pas trop loin
+					if (x + 1 >= 6)// on regarde juste si on ne va pas trop loin
 						BoardInt.Board.set(piece, new Point(6, 1));// si oui, on reste a 6 et on change le sens en
 																	// mettant Y a 1
 					else
 						BoardInt.Board.set(piece, new Point(x + 1, 0));// si non, on garde Y a 0 et on fait juste un pas
 
 				} else {// si il y a des adversaires
-					if (x + nbAdv > 6)// on regarde que le nombre de cases sautees ne nous fait pas sortir du tableau
+					if (x + nbAdv >= 6)// on regarde que le nombre de cases sautees ne nous fait pas sortir du tableau
 						BoardInt.Board.set(piece, new Point(6, 1));// si oui, on reste a 6 et on change le sens en
 																	// mettant Y a 1
 					else
@@ -187,12 +187,12 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				ListPieceAdv = getAdv(move, role, x - 1);// recupere les adversaires se trouvant a la suite
 				nbAdv = ListPieceAdv.size();// et leur nombre
 				if (nbAdv == 0) {// si aucun adversaire a sauter
-					if (x - 1 < 0)// on verifie que l'on ne sort pas du tableau
+					if (x - 1 <= 0)// on verifie que l'on ne sort pas du tableau
 						BoardInt.Board.set(piece, new Point(0, 1));// si oui, on se met bien a la bonne case
 					else
 						BoardInt.Board.set(piece, new Point(x - 1, 1));// si non, on fait juste un pas
 				} else {// si il y a des adversaires a sauter
-					if (x - nbAdv < 0)// on regarde si le nombre d'adversaires sautes ne nous sort pas du tableau
+					if (x - nbAdv <= 0)// on regarde si le nombre d'adversaires sautes ne nous sort pas du tableau
 						BoardInt.Board.set(piece, new Point(0, 1));// si c'est le cas, on se met bien a 0
 					else
 						BoardInt.Board.set(piece, new Point(x - nbAdv, 1));// si non, on saute le nombre d'adversaire

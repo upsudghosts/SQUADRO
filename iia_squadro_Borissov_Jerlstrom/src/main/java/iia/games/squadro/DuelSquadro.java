@@ -20,22 +20,22 @@ public class DuelSquadro {
         BoardSquadro game = new BoardSquadro();
        
             while (!game.isGameOver()) {
-            System.out.println("P1");
+           
             MoveSquadro move1 = p1.chooseMove(game);
             game = game.play(move1, p1.getRole());
    
             if (game.isGameOver()) {
                 break;
             }
-            System.out.println("---------------------------------");
-            System.out.println("P2");
+            
             MoveSquadro move2 = p2.chooseMove(game);
             game = game.play(move2, p2.getRole());
         
-            System.out.println("---------------------------------");
-            }
-            System.out.println("RES");
             System.out.println(game.Board);
+            System.out.println("============================");
+            }
+           
+            
             System.out.println(" ======= GAME OVER =======");
 
     }
