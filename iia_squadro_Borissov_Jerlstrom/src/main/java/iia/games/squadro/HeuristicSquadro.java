@@ -50,7 +50,6 @@ public class HeuristicSquadro  {
 		}
 	
 		int heuristicValue = nbPionsAdvDanger;
-	
 		
 		return heuristicValue;
 	};

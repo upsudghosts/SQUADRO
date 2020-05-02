@@ -83,6 +83,9 @@ public class AlphaBeta<M extends IMove, R extends IRole, B extends IBoard<M, R, 
 			B new_b = b.play(move, roleMax);
 			
 			int newMax = minMax(new_b, 0, Integer.MIN_VALUE, Integer.MAX_VALUE, h);
+			System.out.println("newMAX = " + newMax);
+			System.out.println("MAX = " + Max);
+			System.out.println("------------------------");
 			if (newMax > Max) {
 				bestMove = move;
 				Max = newMax;

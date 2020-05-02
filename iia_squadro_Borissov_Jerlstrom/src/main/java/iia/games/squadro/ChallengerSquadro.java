@@ -37,7 +37,7 @@ public class ChallengerSquadro implements IChallenger {
 			adversaire = RoleSquadro.HORIZONTAL;
 			break;
 		}
-		this.algo = new Minimax<MoveSquadro, RoleSquadro, BoardSquadro>(joueur, adversaire);
+		this.algo = new AlphaBeta<MoveSquadro, RoleSquadro, BoardSquadro>(joueur, adversaire);
 		board = new BoardSquadro();
 		board.setJoueur(joueur);
 		
@@ -52,8 +52,8 @@ public class ChallengerSquadro implements IChallenger {
 		
 		//System.out.println("==============================================================");
 		//System.out.println("AUGUSTE");
-		System.out.println(board.Board);
-		System.out.println("-------------------END OF MOVE----------------------");
+		//System.out.println(board.Board);
+		//System.out.println("-------------------END OF MOVE----------------------");
 	}
 
 	@Override
