@@ -22,6 +22,9 @@ public class HeuristicSquadro {
 							scoreAdv += 12;
 							nbAdvFini++;
 						}
+						if(bCop.Board.get(i).x == 6) {
+							scoreAdv += 12;
+						}
 					}else {
 						scoreAdv += bCop.Board.get(i).x;
 					}
@@ -59,8 +62,13 @@ public class HeuristicSquadro {
 							scoreAdv += 12;
 							nbAdvFini++;
 						}
+						if(bCop.Board.get(i).x == 6) {
+							scoreAdv += 12;
+						}
 					}else {
 						scoreAdv += bCop.Board.get(i).x;
+						
+						
 					}
 				}
 			}
