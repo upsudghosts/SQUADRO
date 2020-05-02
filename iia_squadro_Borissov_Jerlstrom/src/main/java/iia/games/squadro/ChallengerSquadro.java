@@ -2,6 +2,7 @@ package iia.games.squadro;
 
 import java.awt.Point;
 
+import iia.games.algo.AlphaBeta;
 import iia.games.algo.AlwaysFirst;
 import iia.games.algo.Minimax;
 import iia.games.algo.NegAlphaBeta;
@@ -36,7 +37,7 @@ public class ChallengerSquadro implements IChallenger {
 			adversaire = RoleSquadro.HORIZONTAL;
 			break;
 		}
-		this.algo = new NegAlphaBeta<MoveSquadro, RoleSquadro, BoardSquadro>(joueur, adversaire, HeuristicSquadro.hZero);
+		this.algo = new AlphaBeta<MoveSquadro, RoleSquadro, BoardSquadro>(joueur, adversaire);
 		board = new BoardSquadro();
 		board.setJoueur(joueur);
 		

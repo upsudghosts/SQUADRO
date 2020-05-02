@@ -7,7 +7,7 @@ import iia.games.base.IBoard;
 import iia.games.base.IHeuristic;
 import iia.games.base.IMove;
 import iia.games.base.IRole;
-import iia.games.nim.HeuristicNim;
+
 
 public class NegAlphaBeta<M extends IMove, R extends IRole, B extends IBoard<M, R, B>> implements IAlgo<M, R, B> {
 
@@ -28,7 +28,7 @@ public class NegAlphaBeta<M extends IMove, R extends IRole, B extends IBoard<M, 
 	/**
 	 * L'heuristique utilisée par l'algorithme
 	 */
-	private IHeuristic<R, B> h;
+
 
 	/**
 	 * Le joueur Min (l'adversaire)
@@ -54,13 +54,14 @@ public class NegAlphaBeta<M extends IMove, R extends IRole, B extends IBoard<M, 
 	// -------------------------------------------
 	// Constructeurs
 	// -------------------------------------------
-	public NegAlphaBeta(R roleMax, R roleMin, IHeuristic<R, B> h) {
-		this(h, roleMax, roleMin, DEPTHMAXDEFAUT);
+	public NegAlphaBeta(R roleMax, R roleMin) {
+		this.roleMax = roleMax;
+		this.roleMin = roleMin;
+		
 	}
 
-	public NegAlphaBeta(IHeuristic<R, B> h2, R roleMax, R roleMin, int depthMax) {
+	public NegAlphaBeta(R roleMax, R roleMin, int depthMax) {
 		this.depthMax = depthMax;
-		this.h = h2;
 		this.roleMin = roleMin;
 		this.roleMax = roleMax;
 //		System.out.println("Initialisation d'un MiniMax de profondeur " + profMax);
