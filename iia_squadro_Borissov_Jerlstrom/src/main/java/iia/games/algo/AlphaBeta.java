@@ -31,12 +31,12 @@ public class AlphaBeta<M extends IMove, R extends IRole, B extends IBoard<M, R, 
 	/**
 	 * Le joueur Min (l'adversaire)
 	 */
-	private R joueurMin;
+	private R roleMin;
 
 	/**
 	 * Le joueur Max (celui dont l'algorithme de recherche adopte le point de vue)
 	 */
-	private R joueurMax;
+	private R roleMax;
 
 	/**
 	 * Le nombre de noeuds développé par l'algorithme (intéressant pour se faire une
@@ -52,14 +52,14 @@ public class AlphaBeta<M extends IMove, R extends IRole, B extends IBoard<M, R, 
 	// -------------------------------------------
 	// Constructeurs
 	// -------------------------------------------
-	public AlphaBeta(R joueurMax, R joueurMin) {
-		this.joueurMin = joueurMin;
-		this.joueurMax = joueurMax;
+	public AlphaBeta(R roleMax, R roleMin) {
+		this.roleMin = roleMin;
+		this.roleMax = roleMax;
 	}
 
-	public AlphaBeta(R joueurMax, R joueurMin, int profMaxi) {
-		this.joueurMin = joueurMin;
-		this.joueurMax = joueurMax;
+	public AlphaBeta(R roleMax, R roleMin, int profMaxi) {
+		this.roleMin = roleMin;
+		this.roleMax = roleMax;
 		profMax = profMaxi;
 //		System.out.println("Initialisation d'un MiniMax de profondeur " + profMax);
 	}
@@ -74,13 +74,13 @@ public class AlphaBeta<M extends IMove, R extends IRole, B extends IBoard<M, R, 
 		this.nbNodes = 1;
 	    this.nbLeaves = 0;
 		/* A vous de compléter le corps de ce fichier */
-		ArrayList<M> allMoves = b.possibleMoves(joueurMax);
+		ArrayList<M> allMoves = b.possibleMoves(roleMax);
 		int Max = Integer.MIN_VALUE;
 		M bestMove = null;
 		if (allMoves.size() > 0)
 			bestMove = allMoves.get(0);
 		for (M move : allMoves) {
-			B new_b = b.play(move, joueurMax);
+			B new_b = b.play(move, roleMax);
 			
 			int newMax = minMax(new_b, 0, Integer.MIN_VALUE, Integer.MAX_VALUE, h);
 			if (newMax > Max) {
@@ -112,11 +112,11 @@ public class AlphaBeta<M extends IMove, R extends IRole, B extends IBoard<M, R, 
 	public int maxMin(B b, int pCurr, int alpha, int beta, IHeuristic<R, B> h ) {
 		if (pCurr >= profMax) {
 			nbLeaves++;
-			return h.eval(b, joueurMax);
+			return h.eval(b, roleMax);
 		} else {
-			for (M move : b.possibleMoves(joueurMax)) {
+			for (M move : b.possibleMoves(roleMax)) {
 				nbNodes++; // compte aussi les feuilles comme noeuds attention
-				B next_b = b.play(move, joueurMax);
+				B next_b = b.play(move, roleMax);
 				alpha = max(alpha, minMax(next_b, pCurr + 1, alpha, beta, h));
 				if (alpha >= beta)
 					return beta;
@@ -128,11 +128,11 @@ public class AlphaBeta<M extends IMove, R extends IRole, B extends IBoard<M, R, 
 	public int minMax(B b, int pCurr, int alpha, int beta, IHeuristic<R, B> h) {
 		if (pCurr >= profMax) {
 			nbLeaves++;
-			return h.eval(b, joueurMin);
+			return h.eval(b, roleMin);
 		} else {
-			for (M move : b.possibleMoves(joueurMin)) {
+			for (M move : b.possibleMoves(roleMin)) {
 				nbNodes++; // compte aussi les feuilles comme noeuds attention
-				B next_b = b.play(move, joueurMin);
+				B next_b = b.play(move, roleMin);
 				beta = min(beta, maxMin(next_b, pCurr + 1, alpha, beta, h));
 				if (alpha >= beta)
 					return alpha;

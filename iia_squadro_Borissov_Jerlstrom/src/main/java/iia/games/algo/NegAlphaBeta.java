@@ -10,110 +10,94 @@ import iia.games.base.IRole;
 
 
 public class NegAlphaBeta<M extends IMove, R extends IRole, B extends IBoard<M, R, B>> implements IAlgo<M, R, B> {
+	/** La profondeur de recherche par défaut
+     */
+    private final static int PROFMAXDEFAUT = 4;
 
-	/**
-	 * La profondeur de recherche par défaut
-	 */
-	private final static int DEPTHMAXDEFAUT = 2;
+   
+    // -------------------------------------------
+    // Attributs
+    // -------------------------------------------
+ 
+    /**  La profondeur de recherche utilisée pour l'algorithme
+     */
+    private int profMax = PROFMAXDEFAUT;
 
-	// -------------------------------------------
-	// Attributs
-	// -------------------------------------------
+    /**  Le nombre de noeuds développé par l'algorithme
+     * (intéressant pour se faire une idée du nombre de noeuds développés) */
+    private int nbnodes;
 
-	/**
-	 * La profondeur de recherche utilisée pour l'algorithme
-	 */
-	private int depthMax = DEPTHMAXDEFAUT;
-
-	/**
-	 * L'heuristique utilisée par l'algorithme
-	 */
+    /** Le nombre de feuilles évaluées par l'algorithme
+     */
+    private int nbleaves;
 
 
-	/**
-	 * Le joueur Min (l'adversaire)
-	 */
-	private final R roleMin;
+  // -------------------------------------------
+  // Constructeurs
+  // -------------------------------------------
+    public NegAlphaBeta() {
+    }
 
-	/**
-	 * Le joueur Max (celui dont l'algorithme de recherche adopte le point de vue)
-	 */
-	private final R roleMax;
+    public NegAlphaBeta(int profMaxi) {
+        profMax = profMaxi;
+    }
 
-	/**
-	 * Le nombre de noeuds développé par l'algorithme (intéressant pour se faire une
-	 * idée du nombre de noeuds développés)
-	 */
-	private int nbNodes;
 
-	/**
-	 * Le nombre de feuilles évaluées par l'algorithme
-	 */
-	private int nbLeaves;
 
-	// -------------------------------------------
-	// Constructeurs
-	// -------------------------------------------
-	public NegAlphaBeta(R roleMax, R roleMin) {
-		this.roleMax = roleMax;
-		this.roleMin = roleMin;
+
+   // -------------------------------------------
+  // Méthodes de l'interface AlgoJeu
+  // -------------------------------------------
+    
+   public M bestMove(B b, R r, IHeuristic<R, B> h) {
+	   int profondeur=profMax;
+	   ArrayList<M> allMoves = b.possibleMoves(r);
+	   long  Max = negAB(b , r, Integer.MIN_VALUE, Integer.MAX_VALUE,1,  profondeur, h);
+	   M bestMove = allMoves.get(0); 
+	   for( M move: allMoves ) {
+		   	B next_b = b.play(move, r);
+			next_b.play(move, r);
+			
+			int newMax= negAB(next_b,r,-1000000,1000000,1, (profondeur-1), h);
 		
-	}
-
-	public NegAlphaBeta(R roleMax, R roleMin, int depthMax) {
-		this.depthMax = depthMax;
-		this.roleMin = roleMin;
-		this.roleMax = roleMax;
-//		System.out.println("Initialisation d'un MiniMax de profondeur " + profMax);
-	}
-
-	/*
-	 * IAlgo METHODS =============
-	 */
-	@Override
-	public M bestMove (B b, R r, IHeuristic<R, B> h) {
-		int alpha = Integer.MIN_VALUE;
-		int beta = Integer.MAX_VALUE;
-		int profondeur = depthMax;
-		ArrayList<M> possibleMoves = b.possibleMoves(this.roleMax);
-		long Max = NegAB(b, this.roleMax, alpha, beta, 1, profondeur);
-		M bestMove = possibleMoves.get(0);
-		for (M coup : possibleMoves) {
-			B temp = b.play(bestMove, this.roleMax);
-			long NewVal = NegAB(temp, this.roleMax, alpha, beta, 1, (profondeur - 1));
-
-			if (NewVal > Max) {
-				bestMove = coup;
-				Max = NewVal;
+			if( newMax > Max  ) { 
+				bestMove = move; 
+				Max= newMax; 
 			}
-		}
-		return bestMove;
-	}
+       }
+        return bestMove;
 
-	/*
-	 * PUBLIC METHODS ==============
-	 */
+    }
+  // -------------------------------------------
+  // Méthodes publiques
+  // -------------------------------------------
+    public String toString() {
+        return "MiniMax(ProfMax="+profMax+")";
+    }
 
-	public String toString() {
-		return "NegAlphaBeta(ProfMax=" + depthMax + ")";
-	}
-	
-	/*
-	 * PRIVATE METHODS ==============
-	 */
-	
-	    
-	private long NegAB( B b , R r ,int alpha, int beta , int parite, int profondeur) {
-	    ArrayList<M> coups = b.possibleMoves(r);
-    		for( M coup : coups ) {
-    			B temp = b.play(coup, r);
-    			alpha = (int) Math.max(alpha, -NegAB(temp, r ,-beta,-alpha,-parite,(profondeur-1)));
-    			if (alpha >= beta ) {
-    				return beta; 
-    			}
-    		}
-	   	return alpha;      	
-	}
-	
+
+
+  // -------------------------------------------
+  // Méthodes internes
+  // -------------------------------------------
+
+    
+    private int negAB( B b , R r ,long alpha, long beta , int parite,int profondeur, IHeuristic<R, B> h) {
+    	ArrayList<M> allMoves = b.possibleMoves(r);
+    	if( profondeur == 0 ) {
+    		return h.eval(b, r)*parite;
+    	}else {
+    		for( M move : allMoves ) {
+    			B next_b = b.play(move, r);
+    			next_b.play(move, r);
+                alpha = Math.max(alpha, -negAB(next_b,r,-beta,-alpha,-parite,(profondeur-1), h));
+                	if (alpha>= beta ) {
+                		return (int) beta; 
+                }
+            }
+    	}
+		return (int) alpha;  
+    	
+    }
 	
 }
