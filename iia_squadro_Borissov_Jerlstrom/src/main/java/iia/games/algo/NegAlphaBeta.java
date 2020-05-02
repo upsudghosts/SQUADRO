@@ -14,7 +14,7 @@ public class NegAlphaBeta<M extends IMove, R extends IRole, B extends IBoard<M, 
 	/**
 	 * La profondeur de recherche par défaut
 	 */
-	private final static int DEPTHMAXDEFAUT = 4;
+	private final static int DEPTHMAXDEFAUT = 2;
 
 	// -------------------------------------------
 	// Attributs
