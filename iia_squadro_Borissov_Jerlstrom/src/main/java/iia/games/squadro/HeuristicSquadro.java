@@ -25,7 +25,7 @@ public class HeuristicSquadro  {
 				
 				//ALLER
 				if(bCop.Board.get(i).y == 1 && bCop.Board.get(i).x != 0) {
-
+					//int vitessePion = bCop.vitesse.get(i).x;
 					int xCoord = 4 - bCop.Board.get(i).x;
 					if(xCoord >= 0) {
 						if( i - 4 == bCop.Board.get(xCoord).x)nbPionsAdvDanger++;//regarde si on se trouve pile devant un pion adverse
@@ -42,26 +42,7 @@ public class HeuristicSquadro  {
 				
 			}
 			
-			//ENNEMIS
-			for(int i = 0; i < 5; i++) {
-			
-				//ALLER
-				if(bCop.Board.get(i).y == 1 && bCop.Board.get(i).x != 0) {
-					int xCoord = 5 + bCop.Board.get(i).x;
-					if(xCoord <= 9) {
-						if( 5 - i  == bCop.Board.get(xCoord).x)nbPionsAdvDanger--;
-					}
-				//RETOUR
-				} else if(bCop.Board.get(i).y == 0) {
-					int xCoord = 3 + bCop.Board.get(i).x;
-					if(xCoord > 4) {
-						if( 5 - i  == bCop.Board.get(xCoord).x)nbPionsAdvDanger--;
-					}
-				}
-				
-				
-			}
-			
+	
 			break;
 			
 		case HORIZONTAL:
@@ -90,28 +71,7 @@ public class HeuristicSquadro  {
 				
 				
 			}
-			
-			//ENNEMI
-			for(int i = 5; i < 10; i++) {
-				
-				//ALLER
-				if(bCop.Board.get(i).y == 1 && bCop.Board.get(i).x != 0) {
-
-					int xCoord = 4 - bCop.Board.get(i).x;
-					if(xCoord >= 0) {
-						if( i - 4 == bCop.Board.get(xCoord).x)nbPionsAdvDanger--;//regarde si on se trouve pile devant un pion adverse
-					}
-				//RETOUR	
-				} else if(bCop.Board.get(i).y == 0) {
-					
-					int xCoord = 6 - bCop.Board.get(i).x;
-					if(xCoord < 5) {
-						if( i - 4 == bCop.Board.get(xCoord).x)nbPionsAdvDanger--;//regarde si on se trouve pile devant un pion adverse
-					}
-				}
-				
-				
-			}
+	
 			
 			break;
 		}
