@@ -100,7 +100,7 @@ public class ChallengerSquadro implements IChallenger {
 			break;
 		case VERTICAL:
 			pieceABouger = moveS[0];
-			piece = board.stringToInt(pieceABouger);
+			piece = 4 + board.stringToInt(pieceABouger);
 			break;
 		}
 		
