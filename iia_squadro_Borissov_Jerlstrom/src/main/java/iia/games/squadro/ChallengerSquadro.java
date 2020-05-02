@@ -43,12 +43,15 @@ public class ChallengerSquadro implements IChallenger {
 
 	@Override
 	public void iPlay(String move) {
+		System.out.println(board.Board);
 		MoveSquadro realMove = stringToMove(move, joueur);
+		System.out.println(move);
 		board = board.play(realMove, joueur);
 		
 		//System.out.println("==============================================================");
 		//System.out.println("AUGUSTE");
 		System.out.println(board.Board);
+		System.out.println("-------------------END OF MOVE----------------------");
 	}
 
 	@Override
@@ -58,7 +61,7 @@ public class ChallengerSquadro implements IChallenger {
 		
 	//	System.out.println("==============================================================");
 	//	System.out.println("CHAMPION");
-		System.out.println(board.Board);
+	//	System.out.println(board.Board);
 		
 	}
 
@@ -115,13 +118,13 @@ public class ChallengerSquadro implements IChallenger {
 		String m1, m2;
 		String moveF = "";
 		
-		System.out.println("AVANT:" + board.Board.get(piece).y);
+		//System.out.println("AVANT:" + board.Board.get(piece).y);
 		Point avant = board.Board.get(piece);
 		
 		BoardSquadro boardCopy = board.copy();
 		
 		boardCopy = boardCopy.play(move, joueur);
-		System.out.println("APRES:" + boardCopy.Board.get(piece).y);
+		//System.out.println("APRES:" + boardCopy.Board.get(piece).y);
 		Point apres = boardCopy.Board.get(piece);
 		
 		switch(joueur){
@@ -149,7 +152,7 @@ public class ChallengerSquadro implements IChallenger {
 				break;
 			
 		}
-		System.out.println(moveF);
+		//System.out.println(moveF);
 		return moveF;
 	}
 }

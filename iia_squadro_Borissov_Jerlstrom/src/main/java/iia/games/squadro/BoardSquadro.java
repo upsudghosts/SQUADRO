@@ -234,7 +234,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 					
 				}
 			}
-			System.out.println("ON A PRIS UN MOVE DES HORIZONTALS");
+			//System.out.println("ON A PRIS UN MOVE DES HORIZONTALS");
 			break;// on s'arrette
 
 		case VERTICAL:// si c'est le joueur vertical
@@ -247,7 +247,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				}
 
 			}
-			System.out.println("ON A PRIS UN MOVE DES VERTICALS");
+			//System.out.println("ON A PRIS UN MOVE DES VERTICALS");
 			break;// on s'arrette
 		}
 		//System.out.println(moves.size());
