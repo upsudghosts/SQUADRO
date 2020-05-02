@@ -11,7 +11,7 @@ public class HeuristicSquadro  {
 		int nbPionsAdvDanger = 0;
 		int speedAdv = 0;
 		BoardSquadro bCop = BoardSquadro.copy();
-		/*
+		
 		switch(r) {
 		case VERTICAL:
 			
@@ -73,9 +73,9 @@ public class HeuristicSquadro  {
 			
 			break;
 		}
-		*/
-		int heuristicValue = 10;
-		
+	
+		int heuristicValue = nbPionsAdvDanger*10;
+		System.out.println("HEURISTIC VALUE = " + heuristicValue);
 		return heuristicValue;
 	};
 }
