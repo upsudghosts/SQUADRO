@@ -16,12 +16,14 @@ public class HeuristicSquadro {
 				if(i <=4) {//ADV
 					if(bCop.Board.get(i).y==1) {
 						scoreAdv += 6 + (6 - bCop.Board.get(i).x);
+						if(bCop.Board.get(i).x==0) scoreAdv += 12;
 					}else {
 						scoreAdv += bCop.Board.get(i).x;
 					}
 				} else {//AMI
 					if(bCop.Board.get(i).y==1) {
 						scoreAmi += 6 + (6 - bCop.Board.get(i).x);
+						if(bCop.Board.get(i).x==0) scoreAmi += 12;
 					}else {
 						scoreAmi += bCop.Board.get(i).x;
 					}
@@ -35,12 +37,14 @@ public class HeuristicSquadro {
 				if(i <=4) {//AMI
 					if(bCop.Board.get(i).y==1) {
 						scoreAmi += 6 + (6 - bCop.Board.get(i).x);
+						if(bCop.Board.get(i).x==0) scoreAmi += 12;
 					}else {
 						scoreAmi += bCop.Board.get(i).x;
 					}
 				} else {//ADV
 					if(bCop.Board.get(i).y==1) {
 						scoreAdv += 6 + (6 - bCop.Board.get(i).x);
+						if(bCop.Board.get(i).x==0) scoreAdv += 12;
 					}else {
 						scoreAdv += bCop.Board.get(i).x;
 					}
@@ -53,7 +57,6 @@ public class HeuristicSquadro {
 		
 
 		int heuristicValue = scoreAmi - scoreAdv;
-		System.out.println("HEURISTIC VALUE = " + heuristicValue);
 		return heuristicValue;
 	};
 }
