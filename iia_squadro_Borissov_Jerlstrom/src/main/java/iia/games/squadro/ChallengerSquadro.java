@@ -65,7 +65,7 @@ public class ChallengerSquadro implements IChallenger {
 	@Override
 	public String bestMove() {
 		MoveSquadro move = algo.bestMove(board, joueur, HeuristicSquadro.hZero);
-		System.out.println(moveToString(move));
+		//System.out.println(moveToString(move));
 		return moveToString(move);
 	}
 
@@ -115,13 +115,13 @@ public class ChallengerSquadro implements IChallenger {
 		String m1, m2;
 		String moveF = "";
 		
-		//System.out.println("AVANT:" + board.Board.get(piece).y);
+		System.out.println("AVANT:" + board.Board.get(piece).y);
 		Point avant = board.Board.get(piece);
 		
 		BoardSquadro boardCopy = board.copy();
 		
 		boardCopy = boardCopy.play(move, joueur);
-		//System.out.println("APRES:" + boardCopy.Board.get(piece).y);
+		System.out.println("APRES:" + boardCopy.Board.get(piece).y);
 		Point apres = boardCopy.Board.get(piece);
 		
 		switch(joueur){
