@@ -133,6 +133,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 	public BoardSquadro play(MoveSquadro move, RoleSquadro role) {
 		BoardSquadro BoardInt = this.copy();// on travaille sur une copie
 		int piece = move.getPiece();// on recupere la piece a bouger
+		//System.out.println("PIECE CHOISIE = " + piece);
 
 		int AR = Board.get(piece).y;// determine si on est sur un aller ou un retour (0 aller, 1 retour)
 		int speed;// la vitesse == le nombre de pas a faire
@@ -155,18 +156,18 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				nbAdv = ListPieceAdv.size();// on a le nombre d'adversaires a la suite
 
 				if (nbAdv == 0) {// si aucun adversaire
-					if (x + 1 > 6)// on regarde juste si on ne va pas trop loin
+					if (x + 1 >= 6)// on regarde juste si on ne va pas trop loin
 						BoardInt.Board.set(piece, new Point(6, 1));// si oui, on reste a 6 et on change le sens en
 																	// mettant Y a 1
 					else
 						BoardInt.Board.set(piece, new Point(x + 1, 0));// si non, on garde Y a 0 et on fait juste un pas
 
 				} else {// si il y a des adversaires
-					if (x + nbAdv > 6)// on regarde que le nombre de cases sautees ne nous fait pas sortir du tableau
+					if (x + nbAdv + 1 >= 6)// on regarde que le nombre de cases sautees ne nous fait pas sortir du tableau
 						BoardInt.Board.set(piece, new Point(6, 1));// si oui, on reste a 6 et on change le sens en
 																	// mettant Y a 1
 					else
-						BoardInt.Board.set(piece, new Point(x + nbAdv, 0));// si non, on garde Y a 0 et on fait saute
+						BoardInt.Board.set(piece, new Point(x + 1 + nbAdv, 0));// si non, on garde Y a 0 et on fait saute
 																			// juste tout les adversaires
 					for (int adv : ListPieceAdv) {// on parcours toutes les pieces adversaires qui ont ete sautee
 						if (BoardInt.Board.get(adv).y == 1)// si la piece etait sur le chemin du retour, on la remet a 6
@@ -187,15 +188,15 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				ListPieceAdv = getAdv(move, role, x - 1);// recupere les adversaires se trouvant a la suite
 				nbAdv = ListPieceAdv.size();// et leur nombre
 				if (nbAdv == 0) {// si aucun adversaire a sauter
-					if (x - 1 < 0)// on verifie que l'on ne sort pas du tableau
+					if (x - 1 <= 0)// on verifie que l'on ne sort pas du tableau
 						BoardInt.Board.set(piece, new Point(0, 1));// si oui, on se met bien a la bonne case
 					else
 						BoardInt.Board.set(piece, new Point(x - 1, 1));// si non, on fait juste un pas
 				} else {// si il y a des adversaires a sauter
-					if (x - nbAdv < 0)// on regarde si le nombre d'adversaires sautes ne nous sort pas du tableau
+					if (x - nbAdv <= 0)// on regarde si le nombre d'adversaires sautes ne nous sort pas du tableau
 						BoardInt.Board.set(piece, new Point(0, 1));// si c'est le cas, on se met bien a 0
 					else
-						BoardInt.Board.set(piece, new Point(x - nbAdv, 1));// si non, on saute le nombre d'adversaire
+						BoardInt.Board.set(piece, new Point(x - nbAdv - 1, 1));// si non, on saute le nombre d'adversaire
 					for (int adv : ListPieceAdv) {// on parcours les adversaires sautes
 						if (BoardInt.Board.get(adv).y == 1)// si ils etaient sur le chemin du retour
 							BoardInt.Board.set(adv, new Point(6, 1));// on les remets a 6
@@ -228,11 +229,12 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			for (int i = 0; i < 5; i++) {// on parcours toutes ses pieces
 
 				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {// si ce n'est pas une piece qui a fait un aller
-																	// retour
+																// retour
 					moves.add(new MoveSquadro(i));// on l'ajoute dans les pieces pouvant etre bougees
-
+					
 				}
 			}
+			//System.out.println("ON A PRIS UN MOVE DES HORIZONTALS");
 			break;// on s'arrette
 
 		case VERTICAL:// si c'est le joueur vertical
@@ -241,13 +243,14 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {// si ce n'est pas une piece qui a fait un aller
 																	// retour
 					moves.add(new MoveSquadro(i));// on l'ajoute dans les pieces pouvant etre bougees
+					
 				}
 
 			}
-
+			//System.out.println("ON A PRIS UN MOVE DES VERTICALS");
 			break;// on s'arrette
 		}
-
+		//System.out.println(moves.size());
 		return moves;// on renvoie l'ArrayList contenant toutes les pieces pouvant etre bougees
 	}
 
@@ -272,7 +275,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 				j2++;// le joueur 2 "gagne" un point
 			}
 		}				
-		System.out.println("J1 : " + j1 + " | J2 : " + j2);
+		//System.out.println("J1 : " + j1 + " | J2 : " + j2);
 		return false;// si aucun des deux joueurs n'a 4 pieces ayant fait un aller retour, la partie
 						// n'est pas finie
 	}
@@ -281,8 +284,9 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 	@Override
 	public boolean isValidMove(MoveSquadro move, RoleSquadro role) {
 		ArrayList<MoveSquadro> moves = possibleMoves(role);// on recupere les moves possibles
-
+		System.out.println("YOUHOUUUUU");
 		if (moves.contains(move)) {// si jamais l'ArrayList contient ce move,...
+			
 			return true;// ... il s'agit d'un coup valide
 		}
 
@@ -450,11 +454,11 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		String[] moves = new String[5];// un tableau de string contenant tout les moves (au max 5)
 
 		switch (player) {
-		case "vertical":// si c'est le joueur vertical qui joue
+		case "VERTICAL":// si c'est le joueur vertical qui joue
 			for (int i = 5; i < 10; i++) {// on parcours les 5 dernieres cases de la liste
 				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {// si ce n'est pas une piece qui a fait un aller
 																	// retour
-					intDeb = Board.get(i).x;// on joue en vertical, les lettres ne changent pas, uniquement les chiffres
+					intDeb = 7 - Board.get(i).x;// on joue en vertical, les lettres ne changent pas, uniquement les chiffres
 					if (Board.get(i).y == 0) {// on verifie que l'on est sur un aller
 						intFin = intDeb + vitesse.get(i).x;
 						if (intFin > 6)
@@ -478,7 +482,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			}
 			break;// on s'arrette qd on a fait tout les pieces
 
-		case "horizontal":// si c'est le joueur horizontal
+		case "HORIZONTAL":// si c'est le joueur horizontal
 			int interm;
 			for (int i = 0; i < 5; i++) {// on parcours les 5 premieres cases du tableau
 				if (!(Board.get(i).x == 0 && Board.get(i).y == 1)) {// si ce n'est pas une piece qui a deja fait un
@@ -537,6 +541,8 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		case 6:
 			res = 'G';
 			break;
+		default:
+			break;
 
 		}
 		return res;
@@ -551,25 +557,28 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 	 * Methode permettant de jouer un coup, renvoyant le nouveau board apres l'avoir
 	 * joue
 	 */
-	@Override
 	public void play(String move, String role) {
-		BoardSquadro BoardInt = this.copy();// on travaille sur une copie
+		
 
 		String[] moves = move.split("");
 		int case1 = stringToInt(moves[0]);// on recupere l'equivalent en int des lettres
+		
 		int case2 = stringToInt(moves[3]);// on recupere l'equivalent en int des lettres
+		
 		int int1 = Integer.parseInt(moves[1]) - 1;// on recupere les entiers
+
 		int int2 = Integer.parseInt(moves[4]) - 1;// on recupere les entiers
+		
 
 		boolean adv = false;// on initialise les adversaires a false
 		switch (role) {
-		case "horizontal":// si c'est le joueur horizontal qui joue
-			if (BoardInt.Board.get(int1).y == 0) {//si on est en train de faire un aller
+		case "HORIZONTAL":// si c'est le joueur horizontal qui joue
+			if (Board.get(int1-1).y == 0) {//si on est en train de faire un aller
 				if (adv) {//si il n'y a pas d'adversaire, on avance sans se soucier
 					if (case2 == 6)//on verifie si on a fini notre trajet
-						BoardInt.Board.set(int1, new Point(case2, 1));
+						Board.set(int1-1, new Point(case2, 1));
 					else
-						BoardInt.Board.set(int1, new Point(case2, 0));
+						Board.set(int1-1, new Point(case2, 0));
 				} else {
 					//TODO
 				}
@@ -577,9 +586,9 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			} else {//si on est en train de faire un retour
 				if (adv) {//si il n'y a pas d'adversaire
 					if (case2 == 0)//on verifie si on a fini notre trajet
-						BoardInt.Board.set(int1, new Point(case2, 1));
+						Board.set(int1-1, new Point(case2, 1));
 					else
-						BoardInt.Board.set(int1, new Point(case2, 1));
+						Board.set(int1-1, new Point(case2, 1));
 				} else {
 					
 					//TODO
@@ -591,22 +600,26 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 			
 			
 			
-		case "vertical"://si c'est le joueur vertical qui joue, uniquement les lettres changent
-			if (BoardInt.Board.get(case1).y == 0) {//si on est en train de faire un aller
+		case "VERTICAL"://si c'est le joueur vertical qui joue, uniquement les chiffres changent
+			/*
+			System.out.println("CASE1: " + int1);
+			System.out.println("CASE2: " + int2);
+			*/
+			if (Board.get(case1 + 4).y == 0) {//si on est en train de faire un aller
 				if (adv) {//si il n'y a pas d'adversaire, on avance sans se soucier
-					if (int2 == 6)//on verifie si on a fini notre trajet
-						BoardInt.Board.set(case1, new Point(6, 1));
+					if (int2 == 0)//on verifie si on a fini notre trajet
+						Board.set(case1, new Point(6, 1));
 					else
-						BoardInt.Board.set(case1, new Point(int2, 0));
+						Board.set(case1, new Point(6-int2, 0));
 				} else {//si il y a des adversaires a sauter
 					//TODO
 				}
 			} else {//si on est sur le retour
 				if (adv) {//si il n'y a pas d'adversaire
-					if (int2 == 0)//on verifie si on a fini notre trajet
-						BoardInt.Board.set(case1, new Point(0, 1));
+					if (int2 == 6)//on verifie si on a fini notre trajet
+						Board.set(case1, new Point(0, 1));
 					else
-						BoardInt.Board.set(case1, new Point(int2, 1));
+						Board.set(case1, new Point(6-int2, 1));
 				} else {//si il y a des adversaires a sauter
 					
 					//TODO
@@ -616,7 +629,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 		}
 		//DANS LES TODO, ON NE SAIT PAS ENCORE QUOI FAIRE CAR IL Y A UN DOUTE SUR COMMENT AGIR LORSQU'IL Y A UNE COLLISION ENTRE PIECES: EST CE ICI
 		//OU DANS LA METHODE POSSIBLE MOVES QU'IL FAUT S'EN OCCUPER
-
+		
 	}
 
 	/** Methode renvoyant un entier pour un string donne */
