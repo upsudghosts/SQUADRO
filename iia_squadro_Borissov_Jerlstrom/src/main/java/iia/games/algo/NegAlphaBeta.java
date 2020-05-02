@@ -59,11 +59,11 @@ public class NegAlphaBeta<M extends IMove, R extends IRole, B extends IBoard<M, 
 			next_b.play(move, r);
 			
 			int newMax= negAB(next_b,r,Integer.MIN_VALUE,Integer.MAX_VALUE,1, (profondeur-1), h);
-			
+			System.out.println("newMAX = " + newMax);
+			System.out.println("MAX = " + Max);
+			System.out.println("------------------------");
 			if( newMax > Max  ) { 
-				System.out.println("newMAX = " + newMax);
-				System.out.println("MAX = " + Max);
-				System.out.println("------------------------");
+				
 				bestMove = move; 
 				Max= newMax; 
 			}
