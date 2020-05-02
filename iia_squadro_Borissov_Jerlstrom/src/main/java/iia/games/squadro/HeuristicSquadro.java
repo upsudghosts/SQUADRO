@@ -83,14 +83,14 @@ public class HeuristicSquadro {
 			break;
 		}
 	
-		/*
+		
 		if(nbAmiFini == 4) {
 			scoreAmi += 400;
 		}
 		if(nbAdvFini == 4) {
 			scoreAdv += 400;
 		}
-		*/
+		
 
 		int heuristicValue = scoreAmi  - scoreAdv;
 		return heuristicValue;
