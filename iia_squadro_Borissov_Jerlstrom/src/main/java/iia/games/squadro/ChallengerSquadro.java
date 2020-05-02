@@ -69,7 +69,7 @@ public class ChallengerSquadro implements IChallenger {
 
 	@Override
 	public String bestMove() {
-		MoveSquadro move = algo.bestMove(board, joueur, HeuristicSquadro.hZero);
+		MoveSquadro move = algo.bestMove(board, joueur, HeuristicSquadro.hReal);
 		//System.out.println(moveToString(move));
 		return moveToString(move);
 	}
