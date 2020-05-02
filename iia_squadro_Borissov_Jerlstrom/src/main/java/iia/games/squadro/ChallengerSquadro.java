@@ -63,7 +63,7 @@ public class ChallengerSquadro implements IChallenger {
 		
 	//	System.out.println("==============================================================");
 	//	System.out.println("CHAMPION");
-	//	System.out.println(board.Board);
+	//	System.out.println(board.Board); 
 		
 	}
 
