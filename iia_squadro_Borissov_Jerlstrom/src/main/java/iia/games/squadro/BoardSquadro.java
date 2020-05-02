@@ -167,7 +167,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 						BoardInt.Board.set(piece, new Point(6, 1));// si oui, on reste a 6 et on change le sens en
 																	// mettant Y a 1
 					else
-						BoardInt.Board.set(piece, new Point(x + nbAdv, 0));// si non, on garde Y a 0 et on fait saute
+						BoardInt.Board.set(piece, new Point(x + 1 + nbAdv, 0));// si non, on garde Y a 0 et on fait saute
 																			// juste tout les adversaires
 					for (int adv : ListPieceAdv) {// on parcours toutes les pieces adversaires qui ont ete sautee
 						if (BoardInt.Board.get(adv).y == 1)// si la piece etait sur le chemin du retour, on la remet a 6
@@ -196,7 +196,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 					if (x - nbAdv <= 0)// on regarde si le nombre d'adversaires sautes ne nous sort pas du tableau
 						BoardInt.Board.set(piece, new Point(0, 1));// si c'est le cas, on se met bien a 0
 					else
-						BoardInt.Board.set(piece, new Point(x - nbAdv, 1));// si non, on saute le nombre d'adversaire
+						BoardInt.Board.set(piece, new Point(x - nbAdv - 1, 1));// si non, on saute le nombre d'adversaire
 					for (int adv : ListPieceAdv) {// on parcours les adversaires sautes
 						if (BoardInt.Board.get(adv).y == 1)// si ils etaient sur le chemin du retour
 							BoardInt.Board.set(adv, new Point(6, 1));// on les remets a 6
