@@ -12,7 +12,7 @@ import iia.games.base.IRole;
 public class NegAlphaBeta<M extends IMove, R extends IRole, B extends IBoard<M, R, B>> implements IAlgo<M, R, B> {
 	/** La profondeur de recherche par défaut
      */
-    private final static int PROFMAXDEFAUT = 4;
+    private final static int PROFMAXDEFAUT = 15;
 
    
     // -------------------------------------------
