@@ -45,7 +45,7 @@ public class ChallengerSquadro implements IChallenger {
 	public void iPlay(String move) {
 		System.out.println(board.Board);
 		MoveSquadro realMove = stringToMove(move, joueur);
-		System.out.println(move);
+		System.out.println(realMove.getPiece());
 		board = board.play(realMove, joueur);
 		
 		//System.out.println("==============================================================");
