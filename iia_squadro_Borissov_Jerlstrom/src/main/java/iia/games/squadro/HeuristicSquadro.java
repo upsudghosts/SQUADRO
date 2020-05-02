@@ -8,6 +8,8 @@ public class HeuristicSquadro {
 	public static final IHeuristic<RoleSquadro, BoardSquadro> hReal = (BoardSquadro, r) -> {
 		int scoreAmi = 0;
 		int scoreAdv = 0;
+		int nbAdvFini = 0;
+		int nbAmiFini = 0;
 		BoardSquadro bCop = BoardSquadro.copy();
 		switch(r) {
 		case VERTICAL:
@@ -16,14 +18,20 @@ public class HeuristicSquadro {
 				if(i <=4) {//ADV
 					if(bCop.Board.get(i).y==1) {
 						scoreAdv += 6 + (6 - bCop.Board.get(i).x);
-						if(bCop.Board.get(i).x==0) scoreAdv += 12;
+						if(bCop.Board.get(i).x==0) {
+							scoreAdv += 12;
+							nbAdvFini++;
+						}
 					}else {
 						scoreAdv += bCop.Board.get(i).x;
 					}
 				} else {//AMI
 					if(bCop.Board.get(i).y==1) {
 						scoreAmi += 6 + (6 - bCop.Board.get(i).x);
-						if(bCop.Board.get(i).x==0) scoreAmi += 12;
+						if(bCop.Board.get(i).x==0) {
+							scoreAmi += 12;
+							nbAmiFini++;
+						}
 					}else {
 						scoreAmi += bCop.Board.get(i).x;
 					}
@@ -37,14 +45,20 @@ public class HeuristicSquadro {
 				if(i <=4) {//AMI
 					if(bCop.Board.get(i).y==1) {
 						scoreAmi += 6 + (6 - bCop.Board.get(i).x);
-						if(bCop.Board.get(i).x==0) scoreAmi += 12;
+						if(bCop.Board.get(i).x==0) {
+							scoreAmi += 12;
+							nbAmiFini++;
+						}
 					}else {
 						scoreAmi += bCop.Board.get(i).x;
 					}
 				} else {//ADV
 					if(bCop.Board.get(i).y==1) {
 						scoreAdv += 6 + (6 - bCop.Board.get(i).x);
-						if(bCop.Board.get(i).x==0) scoreAdv += 12;
+						if(bCop.Board.get(i).x==0) {
+							scoreAdv += 12;
+							nbAdvFini++;
+						}
 					}else {
 						scoreAdv += bCop.Board.get(i).x;
 					}
@@ -54,9 +68,15 @@ public class HeuristicSquadro {
 			break;
 		}
 	
+		if(nbAmiFini == 4) {
+			scoreAmi += 400;
+		}
+		if(nbAdvFini == 4) {
+			scoreAdv += 400;
+		}
 		
 
-		int heuristicValue = scoreAmi - scoreAdv;
+		int heuristicValue = scoreAmi  - scoreAdv;
 		return heuristicValue;
 	};
 }
