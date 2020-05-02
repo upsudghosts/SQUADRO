@@ -48,7 +48,7 @@ public class HeuristicSquadro  {
 			
 			break;
 		}
-		int heuristicValue = nbPionsFini - nbPionsAlignesAmi + (nbPionsAdvDanger * 10);
+		int heuristicValue = nbPionsAdvDanger;
 		return heuristicValue;
 	};
 }
