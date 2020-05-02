@@ -31,7 +31,7 @@ public class HeuristicSquadro {
 
 					if (bCop.Board.get(i).y == 0) {
 
-						int advCoord = 4 - bCop.Board.get(i).x + j;
+						int advCoord = 4 - bCop.Board.get(i).x - j;
 						if (advCoord >= 0) {
 
 							if (i - 4 == bCop.Board.get(advCoord).x)
@@ -40,7 +40,7 @@ public class HeuristicSquadro {
 						// RETOUR
 					} else if (bCop.Board.get(i).y == 1 && bCop.Board.get(i).x != 0) {
 
-						int advCoord = 6 - bCop.Board.get(i).x - j;
+						int advCoord = 6 - bCop.Board.get(i).x + j;
 						if (advCoord < 5) {
 							if (i - 4 == bCop.Board.get(advCoord).x)
 								nbPionsAdvDanger++;// regarde si on se trouve pile devant un pion adverse
