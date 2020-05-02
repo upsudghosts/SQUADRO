@@ -13,7 +13,7 @@ public class AlphaBeta<M extends IMove, R extends IRole, B extends IBoard<M, R, 
 	/**
 	 * La profondeur de recherche par défaut
 	 */
-	private final static int PROFMAXDEFAUT = 15;
+	private final static int PROFMAXDEFAUT = 12;
 
 	// -------------------------------------------
 	// Attributs
