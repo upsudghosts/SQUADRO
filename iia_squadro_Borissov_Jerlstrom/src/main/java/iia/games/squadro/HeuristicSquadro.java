@@ -77,7 +77,7 @@ public class HeuristicSquadro  {
 		}
 	
 		int heuristicValue = nbPionsAdvDanger*10;
-		//System.out.println("HEURISTIC VALUE = " + heuristicValue);
+		System.out.println("HEURISTIC VALUE = " + heuristicValue);
 		return heuristicValue;
 	};
 }
