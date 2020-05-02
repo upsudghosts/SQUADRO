@@ -163,7 +163,7 @@ public class BoardSquadro extends ABoard<MoveSquadro, RoleSquadro, BoardSquadro>
 						BoardInt.Board.set(piece, new Point(x + 1, 0));// si non, on garde Y a 0 et on fait juste un pas
 
 				} else {// si il y a des adversaires
-					if (x + nbAdv >= 6)// on regarde que le nombre de cases sautees ne nous fait pas sortir du tableau
+					if (x + nbAdv + 1 >= 6)// on regarde que le nombre de cases sautees ne nous fait pas sortir du tableau
 						BoardInt.Board.set(piece, new Point(6, 1));// si oui, on reste a 6 et on change le sens en
 																	// mettant Y a 1
 					else
