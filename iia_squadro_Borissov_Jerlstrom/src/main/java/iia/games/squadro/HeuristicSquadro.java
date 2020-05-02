@@ -49,7 +49,7 @@ public class HeuristicSquadro  {
 			break;
 		}
 	
-		int heuristicValue = nbPionsAdvDanger;
+		int heuristicValue = nbPionsAdvDanger*10;
 		
 		return heuristicValue;
 	};
