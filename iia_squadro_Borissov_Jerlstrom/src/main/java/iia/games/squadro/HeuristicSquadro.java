@@ -12,6 +12,9 @@ public class HeuristicSquadro {
 		int nbAmiFini = 0;
 		int nbAmiAl = 0;
 		int oldX = -1;
+		int nbAdvRetour = 0;
+		int nbAmiRetour = 0;
+		
 		BoardSquadro bCop = BoardSquadro.copy();
 		switch(r) {
 		case VERTICAL:
@@ -23,6 +26,8 @@ public class HeuristicSquadro {
 						if(bCop.Board.get(i).x == 0) {
 							scoreAdv += 12;
 							nbAdvFini++;
+						} else {
+							nbAdvRetour++;
 						}
 						
 					}else {
@@ -34,6 +39,8 @@ public class HeuristicSquadro {
 						if(bCop.Board.get(i).x == 0) {
 							scoreAmi += 12;
 							nbAmiFini++;
+						} else {
+							nbAmiRetour++;
 						}
 						if(i > 5 && bCop.Board.get(i).x != 6) {
 							if(bCop.Board.get(i).x == oldX) nbAmiAl++;
@@ -61,6 +68,8 @@ public class HeuristicSquadro {
 						if(bCop.Board.get(i).x == 0) {
 							scoreAmi += 12;
 							nbAmiFini++;
+						}  else {
+							nbAmiRetour++;
 						}
 						
 						if(i > 5 && bCop.Board.get(i).x != 6) {
@@ -82,6 +91,8 @@ public class HeuristicSquadro {
 						if(bCop.Board.get(i).x == 0) {
 							scoreAdv += 12;
 							nbAdvFini++;
+						} else {
+							nbAdvRetour++;
 						}
 							
 						
@@ -108,7 +119,7 @@ public class HeuristicSquadro {
 		
 	
 
-		int heuristicValue =  scoreAmi - scoreAdv - (10*nbAmiAl); //+ ((2*nbAdvRetour) - nbAmiRetour);
+		int heuristicValue =  scoreAmi - scoreAdv - (10*nbAmiAl) +  (nbAmiRetour - (2*nbAdvRetour));
 		return heuristicValue;
 	};
 }
