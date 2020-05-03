@@ -92,7 +92,7 @@ public class HeuristicSquadro {
 		}
 		
 
-		int heuristicValue = scoreAdv - scoreAmi;
+		int heuristicValue = scoreAmi - scoreAdv; //+ ((2*nbAdvRetour) - nbAmiRetour);
 		return heuristicValue;
 	};
 }
