@@ -20,7 +20,10 @@ public class HeuristicSquadro {
 				if(i <=4) {//ADV
 					if(bCop.Board.get(i).y==1) {
 						scoreAdv += 6 + (6 - bCop.Board.get(i).x);
-						if(bCop.Board.get(i).x == 0) scoreAdv += 12;
+						if(bCop.Board.get(i).x == 0) {
+							scoreAdv += 12;
+							nbAdvFini++;
+						}
 						
 					}else {
 						scoreAdv += bCop.Board.get(i).x;
@@ -28,7 +31,10 @@ public class HeuristicSquadro {
 				} else {//AMI
 					if(bCop.Board.get(i).y==1) {
 						scoreAmi += 6 + (6 - bCop.Board.get(i).x);
-						if(bCop.Board.get(i).x == 0) scoreAmi += 12;
+						if(bCop.Board.get(i).x == 0) {
+							scoreAmi += 12;
+							nbAmiFini++;
+						}
 						if(i > 5 && bCop.Board.get(i).x != 6) {
 							if(bCop.Board.get(i).x == oldX) nbAmiAl++;
 						}
@@ -52,7 +58,10 @@ public class HeuristicSquadro {
 				if(i <=4) {//AMI
 					if(bCop.Board.get(i).y==1) {
 						scoreAmi += 6 + (6 - bCop.Board.get(i).x);
-						if(bCop.Board.get(i).x == 0) scoreAmi += 12;
+						if(bCop.Board.get(i).x == 0) {
+							scoreAmi += 12;
+							nbAmiFini++;
+						}
 						
 						if(i > 5 && bCop.Board.get(i).x != 6) {
 							if(bCop.Board.get(i).x == oldX) nbAmiAl++;
@@ -70,7 +79,10 @@ public class HeuristicSquadro {
 				} else {//ADV
 					if(bCop.Board.get(i).y==1) {
 						scoreAdv += 6 + (6 - bCop.Board.get(i).x);
-						if(bCop.Board.get(i).x == 0) scoreAdv += 12;
+						if(bCop.Board.get(i).x == 0) {
+							scoreAdv += 12;
+							nbAdvFini++;
+						}
 							
 						
 					
@@ -85,9 +97,18 @@ public class HeuristicSquadro {
 			break;
 		}
 	
+
+		
+		if(nbAmiFini == 4) {
+			scoreAmi += 20;
+		}
+		if(nbAdvFini == 4) {
+			scoreAdv += 3 * 20;
+		}
+		
 	
 
-		int heuristicValue =   scoreAdv - scoreAmi + (10*nbAmiAl); //+ ((2*nbAdvRetour) - nbAmiRetour);
+		int heuristicValue =   scoreAmi - scoreAdv - (10*nbAmiAl); //+ ((2*nbAdvRetour) - nbAmiRetour);
 		return heuristicValue;
 	};
 }
