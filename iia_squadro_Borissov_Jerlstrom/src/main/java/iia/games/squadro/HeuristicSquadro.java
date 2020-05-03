@@ -21,12 +21,7 @@ public class HeuristicSquadro {
 					if(bCop.Board.get(i).y==1) {
 						
 						scoreAdv += 6 + (6 - bCop.Board.get(i).x);
-						if(bCop.Board.get(i).x==0) {
-							scoreAdv += 12;
-							nbAdvFini++;
-						} else {//implique que l'adversaire est sur un retour
-							nbAdvRetour++;
-						}
+						
 						
 					}else {
 						scoreAdv += bCop.Board.get(i).x;
@@ -34,12 +29,7 @@ public class HeuristicSquadro {
 				} else {//AMI
 					if(bCop.Board.get(i).y==1) {
 						scoreAmi += 6 + (6 - bCop.Board.get(i).x);
-						if(bCop.Board.get(i).x==0) {
-							scoreAmi += 12;
-							nbAmiFini++;
-						} else {//implique que l'ami est sur un retour
-							nbAmiRetour++;
-						}
+					
 					}else {
 						scoreAmi += bCop.Board.get(i).x;
 					}
@@ -53,24 +43,14 @@ public class HeuristicSquadro {
 				if(i <=4) {//AMI
 					if(bCop.Board.get(i).y==1) {
 						scoreAmi += 6 + (6 - bCop.Board.get(i).x);
-						if(bCop.Board.get(i).x==0) {
-							scoreAmi += 12;
-							nbAmiFini++;
-						} else {//implique que l'ami est sur un retour
-							nbAmiRetour++;
-						}
+					
 					}else {
 						scoreAmi += bCop.Board.get(i).x;
 					}
 				} else {//ADV
 					if(bCop.Board.get(i).y==1) {
 						scoreAdv += 6 + (6 - bCop.Board.get(i).x);
-						if(bCop.Board.get(i).x==0) {
-							scoreAdv += 12;
-							nbAdvFini++;
-						} else {//implique que l'adversaire est sur un retour
-							nbAdvRetour++;
-						}
+						
 					
 					}else {
 						scoreAdv += bCop.Board.get(i).x;
@@ -83,14 +63,7 @@ public class HeuristicSquadro {
 			break;
 		}
 	
-		
-		if(nbAmiFini == 4) {
-			scoreAmi += 50;
-		}
-		if(nbAdvFini == 4) {
-			scoreAdv += 50;
-		}
-		
+	
 
 		int heuristicValue = scoreAmi - scoreAdv; //+ ((2*nbAdvRetour) - nbAmiRetour);
 		return heuristicValue;
