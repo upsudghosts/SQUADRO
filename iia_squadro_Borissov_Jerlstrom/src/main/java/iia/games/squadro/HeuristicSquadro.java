@@ -85,10 +85,10 @@ public class HeuristicSquadro {
 	
 		
 		if(nbAmiFini == 4) {
-			scoreAmi += 100;
+			scoreAmi += 50;
 		}
 		if(nbAdvFini == 4) {
-			scoreAdv += 100;
+			scoreAdv += 50;
 		}
 		
 
